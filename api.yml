@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  version: v1
+  title: API Gateway
+  description: Apit gateway project which follows the OpenAPI spec
+  termsOfService: 'https://www.jumkid.com/terms-of-use'
+  contact:
+    name: Chooli Yip
+    url: jumkid.com
+    email: chooli.yip@gmail.com
+  license:
+    name: Jumkid Public License
+    url: 'http://license.jumkid.com'
+servers:
+  - description: Testing
+    url: 'http://test.jumkid.com'
+  - description: Live production
+    url: 'http://api.jumkid.com'
+tags:
+  - name: v1
+    description: API for version 1.0.0
+  - name: test
+    description: API for test    
+security:
+  - bearerAuth: []
+
+paths:

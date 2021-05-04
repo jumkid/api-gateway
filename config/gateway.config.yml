@@ -1,0 +1,79 @@
+### self defined variables, not part of the configuration
+Variables:
+  anyHost: &anyHost '*'
+### end
+
+http:
+  port: 80
+
+admin:
+  port: 9876
+  host: localhost
+
+apiEndpoints:  
+  content:
+    - host: *anyHost
+      paths: '/content/:id'
+      methods: ["GET"]
+    - host: *anyHost
+      paths: '/streaming-content/:id'
+      methods: ["GET"]
+    - host: *anyHost
+      paths: '/thumbnail-content/:id'
+      methods: ["GET"]  
+  
+  content-metadata:
+    - host: *anyHost
+      paths: '/content/metadata/:id'
+      methods: ["GET"]
+    - host: *anyHost
+      paths: '/content/metadata'
+      methods: ["GET"]
+    - host: *anyHost
+      paths: '/content/:id'
+      methods: ["DELETE"]  
+
+serviceEndpoints:
+  content-vault:
+    url: 'http://127.0.0.1:8082'  
+
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+  - request-transformer
+
+pipelines:
+  contentApi:
+    apiEndpoints:
+      - content
+    policies:
+      - expression:
+        - action:
+            jscode: |
+                    var reqUrl = req.url.split("/"), contentId = reqUrl[2];
+                    if (reqUrl[1] == "streaming-content") { req.url = "/content/stream/" + contentId; }
+                    else if (reqUrl[1] == "thumbnail-content") { req.url = "/content/thumbnail/" + contentId; }
+                    else { req.url = "/content/plain/" + contentId; }
+      - log:
+        - action:
+            message: ${req.url}
+      - proxy:
+          - action:
+              serviceEndpoint: content-vault 
+              changeOrigin: true    
+
+  default:
+    apiEndpoints:
+      - content-metadata
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth: 
+      - log:
+        - action:
+            message: ${req.url}

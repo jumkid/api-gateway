@@ -1,2 +1,2 @@
 # api-gateway
-API gateway
+Api gateway project which follows the OpenAPI spec
