@@ -1,7 +1,9 @@
-### self defined variables, not part of the configuration
+### self defined variables, use them with anchor. Not part of the configuration ###
 Variables:
   anyHost: &anyHost '*'
-### end
+  activityServiceUrl: &activityServiceUrl ${ACTIVITY_SERIVCE_URL:-'http://127.0.0.1:8081'}
+  contentVaultUrl: &contentVaultUrl ${CONTENT_VAULT_URL:-'http://127.0.0.1:8082'}
+### self defined variables - end ###
 
 http:
   port: 80
@@ -11,31 +13,51 @@ admin:
   host: localhost
 
 apiEndpoints:  
+  N/A:
+    - host: *anyHost
+      paths: '/not-available-api'
+      methods: ["GET", "POST", "PUT", "DELETE"]
+
   content:
     - host: *anyHost
       paths: '/content/:id'
       methods: ["GET"]
     - host: *anyHost
+      paths: '/content/html/:id'
+      methods: ["GET"]  
+    - host: *anyHost
       paths: '/streaming-content/:id'
       methods: ["GET"]
     - host: *anyHost
       paths: '/thumbnail-content/:id'
-      methods: ["GET"]  
+      methods: ["GET"]
+    - host: *anyHost
+      paths: '/content/download/:id'
+      methods: ["GET"]    
+    - host: *anyHost
+      paths: '/content'
+      methods: ["POST"]
+    - host: *anyHost
+      paths: '/content/html'
+      methods: ["POST"]  
+    - host: *anyHost
+      paths: '/content/upload'
+      methods: ["POST"]
   
   content-metadata:
     - host: *anyHost
       paths: '/content/metadata/:id'
       methods: ["GET"]
     - host: *anyHost
-      paths: '/content/metadata'
-      methods: ["GET"]
+      paths: '/content/metadata/search'
+      methods: ["GET"]  
     - host: *anyHost
       paths: '/content/:id'
-      methods: ["DELETE"]  
+      methods: ["DELETE"]
 
 serviceEndpoints:
   content-vault:
-    url: 'http://127.0.0.1:8082'  
+    url: *contentVaultUrl
 
 policies:
   - basic-auth
@@ -47,6 +69,7 @@ policies:
   - proxy
   - rate-limit
   - request-transformer
+  - terminate
 
 pipelines:
   contentApi:
@@ -56,24 +79,47 @@ pipelines:
       - expression:
         - action:
             jscode: |
-                    var reqUrl = req.url.split("/"), contentId = reqUrl[2];
-                    if (reqUrl[1] == "streaming-content") { req.url = "/content/stream/" + contentId; }
-                    else if (reqUrl[1] == "thumbnail-content") { req.url = "/content/thumbnail/" + contentId; }
-                    else { req.url = "/content/plain/" + contentId; }
+                    var reqUrl = req.url.split('/'), contentId = req.params.id;
+                    if (req.method == 'GET') {
+                      if (reqUrl[1] == 'streaming-content') { req.url = '/content/stream/' + contentId; }
+                      else if (reqUrl[1] == 'thumbnail-content') { req.url = '/content/thumbnail/' + contentId; }
+                      else if (reqUrl[2] == 'download') { req.url = '/file/download/' + contentId; }
+                    } else if (req.method == 'POST') {
+                      if (reqUrl[2] == 'upload') { req.url = '/file/upload'; }
+                    }
       - log:
         - action:
             message: ${req.url}
       - proxy:
           - action:
               serviceEndpoint: content-vault 
-              changeOrigin: true    
+              changeOrigin: true
 
-  default:
+  contentMetaApi:
     apiEndpoints:
       - content-metadata
     policies:
-    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
-    # - key-auth: 
+      - expression:
+        - action:
+            jscode: |
+                    if (req.params.id == 'search') {
+                      let query = req.url.split('?');
+                      req.url = "/metadata" + (query.length >= 2 ? "?" + query[1] : "");
+                    } else {
+                      req.url = "/metadata/" + req.params.id;
+                    }
       - log:
         - action:
             message: ${req.url}
+      - proxy:
+          - action:
+              serviceEndpoint: content-vault 
+              changeOrigin: true
+
+  N/A:
+    apiEndpoints:
+      - N/A
+    policies:
+      - terminate:
+          statusCode: 501
+          message: 'Opps! this api is not yet available'
