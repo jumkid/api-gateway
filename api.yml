@@ -223,9 +223,15 @@ paths:
         - name: q
           in: query
           required: false
-          description: query keyword
+          description: query string
           schema:
             type: string
+        - name: size
+          in: query
+          required: false
+          description: size of result set
+          schema:
+            type: integer    
       responses:
           '200':
             description: OK

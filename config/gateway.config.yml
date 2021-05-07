@@ -1,6 +1,9 @@
 ### self defined variables, use them with anchor. Not part of the configuration ###
 Variables:
   anyHost: &anyHost '*'
+  keycloakClientId: &keycloakClientId ${KEYCLOAK_CLIENT_ID:-"'api-gateway'"}
+  keycloakClientSecret: &keycloakClientSecret ${KEYCLOAK_CLIENT_SECRET:-"'282cf0bd-e670-448a-9a8a-811f4cad0188'"}
+  keycloakServiceUrl: &keycloakServiceUrl ${KEYCLOAK_SERIVCE_URL:-'http://keycloak:8080'}
   activityServiceUrl: &activityServiceUrl ${ACTIVITY_SERIVCE_URL:-'http://127.0.0.1:8081'}
   contentVaultUrl: &contentVaultUrl ${CONTENT_VAULT_URL:-'http://127.0.0.1:8082'}
 ### self defined variables - end ###
@@ -18,10 +21,18 @@ apiEndpoints:
       paths: '/not-available-api'
       methods: ["GET", "POST", "PUT", "DELETE"]
 
+  login:
+    - host: *anyHost
+      paths: '/signin'
+      methods: ["POST"]    
+
   content:
     - host: *anyHost
       paths: '/content/:id'
       methods: ["GET"]
+    - host: *anyHost
+      paths: '/content/trash'
+      methods: ["GET"]  
     - host: *anyHost
       paths: '/content/html/:id'
       methods: ["GET"]  
@@ -54,8 +65,13 @@ apiEndpoints:
     - host: *anyHost
       paths: '/content/:id'
       methods: ["DELETE"]
+    - host: *anyHost
+      paths: '/content/trash'
+      methods: ["DELETE"]  
 
 serviceEndpoints:
+  keycloak:
+    url: *keycloakServiceUrl
   content-vault:
     url: *contentVaultUrl
 
@@ -72,6 +88,28 @@ policies:
   - terminate
 
 pipelines:
+  loginApi:
+    apiEndpoints:
+      - login
+    policies:
+      - expression:
+        - action:
+            jscode: |
+                    req.url = '/auth/realms/jumkid/protocol/openid-connect/token';
+      - request-transformer:
+        - action:
+            body:
+              add:
+                client_id: *keycloakClientId
+                client_secret: *keycloakClientSecret
+                grant_type: "'password'"
+      - log:
+        - action:
+            message: ${req.url}
+      - proxy:
+          - action:
+              serviceEndpoint: keycloak
+              changeOrigin: true
   contentApi:
     apiEndpoints:
       - content
@@ -79,11 +117,12 @@ pipelines:
       - expression:
         - action:
             jscode: |
-                    var reqUrl = req.url.split('/'), contentId = req.params.id;
+                    let reqUrl = req.url.split('/'), contentId = req.params.id;
                     if (req.method == 'GET') {
                       if (reqUrl[1] == 'streaming-content') { req.url = '/content/stream/' + contentId; }
                       else if (reqUrl[1] == 'thumbnail-content') { req.url = '/content/thumbnail/' + contentId; }
                       else if (reqUrl[2] == 'download') { req.url = '/file/download/' + contentId; }
+                      else if (reqUrl[2] == 'trash') { req.url = '/trash'; } 
                     } else if (req.method == 'POST') {
                       if (reqUrl[2] == 'upload') { req.url = '/file/upload'; }
                     }
@@ -102,11 +141,15 @@ pipelines:
       - expression:
         - action:
             jscode: |
-                    if (req.params.id == 'search') {
-                      let query = req.url.split('?');
-                      req.url = "/metadata" + (query.length >= 2 ? "?" + query[1] : "");
-                    } else {
-                      req.url = "/metadata/" + req.params.id;
+                    let reqUrl = req.url.split('/'), contentId = req.params.id;
+                    if (req.method == 'GET') {
+                      if (contentId == 'search') {
+                        let query = req.url.split('?');
+                        req.url = "/metadata" + (query.length >= 2 ? "?" + query[1] : "");  
+                      }
+                      else { req.url = "/metadata/" + contentId; }
+                    } else if (req.method == 'DELETE') {
+                      if (reqUrl[2] == 'trash') { req.url = '/trash'; }
                     }
       - log:
         - action:

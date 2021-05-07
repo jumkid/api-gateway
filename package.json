@@ -2,7 +2,7 @@
   "name": "api-gateway",
   "description": "Express Gateway Instance Bootstraped from Command Line",
   "repository": {},
-  "license": "UNLICENSED",
+  "license": "Apache Licence 2.0",
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
