@@ -5,7 +5,18 @@
   "license": "Apache Licence 2.0",
   "version": "1.0.0",
   "main": "server.js",
+  "scripts": {
+    "build": "rimraf dist/ && copyfiles config/** server.js package.json dist/",
+    "test": "node server.js",
+    "start": "./node_modules/.bin/pm2-runtime start server.js -i 2",
+    "stop": "./node_modules/.bin/pm2-runtime stop server",
+    "status": "./node_modules/.bin/pm2 status"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1"
+  },
   "dependencies": {
-    "express-gateway": "^1.16.11"
+    "express-gateway": "^1.16.11",
+    "pm2": "^4.5.6"
   }
 }
