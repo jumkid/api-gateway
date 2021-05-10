@@ -54,6 +54,9 @@ apiEndpoints:
     - host: *anyHost
       paths: '/content/upload'
       methods: ["POST"]
+    - host: *anyHost
+      paths: '/content/multipleUpload'
+      methods: ["POST"]  
   
   content-metadata:
     - host: *anyHost
@@ -125,10 +128,11 @@ pipelines:
                       else if (reqUrl[2] == 'trash') { req.url = '/trash'; } 
                     } else if (req.method == 'POST') {
                       if (reqUrl[2] == 'upload') { req.url = '/file/upload'; }
+                      else if (reqUrl[2] == 'multipleUpload') { req.url = '/file/multipleUpload'; }
                     }
       - log:
         - action:
-            message: ${req.url}
+            message: ${req.method} ${req.url}
       - proxy:
           - action:
               serviceEndpoint: content-vault 
