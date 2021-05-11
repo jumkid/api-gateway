@@ -61,7 +61,7 @@ apiEndpoints:
   content-metadata:
     - host: *anyHost
       paths: '/content/metadata/:id'
-      methods: ["GET"]
+      methods: ["GET", "PUT"]
     - host: *anyHost
       paths: '/content/metadata/search'
       methods: ["GET"]  
@@ -154,10 +154,12 @@ pipelines:
                       else { req.url = "/metadata/" + contentId; }
                     } else if (req.method == 'DELETE') {
                       if (reqUrl[2] == 'trash') { req.url = '/trash'; }
-                    }
+                    } else if (req.method == 'PUT') {
+                      if (reqUrl[2] == 'metadata') { req.url = '/metadata' + contentId; }
+                    } 
       - log:
         - action:
-            message: ${req.url}
+            message: ${req.method} ${req.url}
       - proxy:
           - action:
               serviceEndpoint: content-vault 
