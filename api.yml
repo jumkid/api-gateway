@@ -212,7 +212,43 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/Metadata'
-
+    put:
+      tags:
+        - v1
+      operationId: updateMetadata
+      description: update metadata for media file
+      parameters:
+        - name: contentId
+          in: path
+          required: true
+          description: mediafile identifier
+          schema:
+            type: string
+        - name: mediaFileField
+          in: query
+          required: true
+          description: mediaFile field name
+          schema:
+            $ref: '#/components/schemas/MediaFileField'
+        - name: mediaFileFieldValue
+          in: query
+          required: true
+          description: mediaFile field value
+          schema:
+            type: string  
+      requestBody:
+        description: metadata json object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
   '/content/metadata/search':
     get:
       tags:
@@ -291,6 +327,93 @@ paths:
                 type: string
                 format: binary            
 
+## Gallery API
+  '/gallery':
+    post:
+      tags:
+        - v1
+      operationId: uploadGallery
+      description: upload multiple file as gallery
+      parameters:
+        - name: title
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: content
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: files
+          in: query
+          required: false
+          schema:
+            type: array
+            format: file
+        - name: tags
+          in: query
+          required: false
+          schema:
+            type: array
+            format: string    
+      responses:
+        '202':
+          description: upload a gallery with multiple files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+  '/gallery/{id}':
+    put:
+      tags:
+        - v1
+      operationId: updateGallery
+      description: update a gallery
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: gallery identifier
+          schema:
+            type: string
+        - name: mediaFileIds
+          in: query
+          required: false
+          schema:
+            type: array
+            format: string
+          description: a list of media file id
+        - name: files
+          in: query
+          required: false
+          schema:
+            type: array
+            format: file
+        - name: tags
+          in: query
+          required: false
+          schema:
+            type: array
+            format: string
+        - name: title
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: content
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '202':
+          description: updated a gallery
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+
 components:
   schemas:
     Metadata:
@@ -335,7 +458,6 @@ components:
                  $ref: ./share.yml#/components/schemas/LocalDateTime
               numberValue:
                 type: integer   
-
         tags:
           type: array
           items:
@@ -350,4 +472,19 @@ components:
       enum:
         - small
         - medium
-        - large                  
+        - large
+    MediaFileField:
+      type: string
+      enum:
+        - title
+        - filename
+        - mimeType
+        - module
+        - content
+    MediaFileModule:
+      type: string
+      enum:
+        - FILE
+        - TEXT
+        - HTML
+        - GALLERY

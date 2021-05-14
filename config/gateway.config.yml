@@ -70,7 +70,15 @@ apiEndpoints:
       methods: ["DELETE"]
     - host: *anyHost
       paths: '/content/trash'
-      methods: ["DELETE"]  
+      methods: ["DELETE"]
+
+  content-gallery:
+    - host: *anyHost
+      paths: '/gallery'
+      methods: ["POST"]
+    - host: *anyHost
+      paths: '/gallery/:id'
+      methods: ["PUT"]
 
 serviceEndpoints:
   keycloak:
@@ -113,6 +121,7 @@ pipelines:
           - action:
               serviceEndpoint: keycloak
               changeOrigin: true
+
   contentApi:
     apiEndpoints:
       - content
@@ -141,6 +150,7 @@ pipelines:
   contentMetaApi:
     apiEndpoints:
       - content-metadata
+      - content-gallery
     policies:
       - expression:
         - action:
@@ -155,7 +165,7 @@ pipelines:
                     } else if (req.method == 'DELETE') {
                       if (reqUrl[2] == 'trash') { req.url = '/trash'; }
                     } else if (req.method == 'PUT') {
-                      if (reqUrl[2] == 'metadata') { req.url = '/metadata' + contentId; }
+                      if (reqUrl[2] == 'metadata') { req.url = '/metadata/' + contentId; }
                     } 
       - log:
         - action:
