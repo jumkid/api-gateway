@@ -126,6 +126,11 @@ pipelines:
     apiEndpoints:
       - content
     policies:
+      - request-transformer:
+        - action:
+            headers:
+                add:
+                  journey_id: requestID
       - expression:
         - action:
             jscode: |
@@ -141,7 +146,7 @@ pipelines:
                     }
       - log:
         - action:
-            message: ${req.method} ${req.url}
+            message: "[JID: ${req.get('journey_id')}] ${req.method} ${req.url}"
       - proxy:
           - action:
               serviceEndpoint: content-vault 
@@ -152,6 +157,11 @@ pipelines:
       - content-metadata
       - content-gallery
     policies:
+      - request-transformer:
+          - action:
+              headers:
+                  add:
+                    journey_id: requestID
       - expression:
         - action:
             jscode: |
@@ -169,7 +179,7 @@ pipelines:
                     } 
       - log:
         - action:
-            message: ${req.method} ${req.url}
+            message: "[JID: ${req.get('journey_id')}] ${req.method} ${req.url}"
       - proxy:
           - action:
               serviceEndpoint: content-vault 
