@@ -6,6 +6,7 @@ Variables:
   keycloakServiceUrl: &keycloakServiceUrl ${KEYCLOAK_SERIVCE_URL:-'http://keycloak:8080'}
   activityServiceUrl: &activityServiceUrl ${ACTIVITY_SERIVCE_URL:-'http://127.0.0.1:8081'}
   contentVaultUrl: &contentVaultUrl ${CONTENT_VAULT_URL:-'http://127.0.0.1:8082'}
+  domainDataUrl: &domainDataUrl ${DOMAIN_DATA_URL:-'http://127.0.0.1:8083'}
 ### self defined variables - end ###
 
 http:
@@ -34,13 +35,13 @@ apiEndpoints:
       paths: '/content/trash'
       methods: ["GET"]  
     - host: *anyHost
-      paths: '/content/html/:id'
+      paths: '/html/:id'
       methods: ["GET"]  
     - host: *anyHost
       paths: '/streaming-content/:id'
       methods: ["GET"]
     - host: *anyHost
-      paths: '/thumbnail-content/:id'
+      paths: '/content-thumbnail/:id'
       methods: ["GET"]
     - host: *anyHost
       paths: '/content/download/:id'
@@ -56,7 +57,7 @@ apiEndpoints:
       methods: ["POST"]
     - host: *anyHost
       paths: '/content/multipleUpload'
-      methods: ["POST"]  
+      methods: ["POST"]
   
   content-metadata:
     - host: *anyHost
@@ -80,11 +81,18 @@ apiEndpoints:
       paths: '/gallery/:id'
       methods: ["PUT"]
 
+  domain-data:
+    - host: *anyHost
+      paths: '/domain-data'
+      methods: [ "GET" ]
+
 serviceEndpoints:
   keycloak:
     url: *keycloakServiceUrl
   content-vault:
     url: *contentVaultUrl
+  domain-data:
+    url: *domainDataUrl
 
 policies:
   - basic-auth
@@ -137,7 +145,7 @@ pipelines:
                     let reqUrl = req.url.split('/'), contentId = req.params.id;
                     if (req.method == 'GET') {
                       if (reqUrl[1] == 'streaming-content') { req.url = '/content/stream/' + contentId; }
-                      else if (reqUrl[1] == 'thumbnail-content') { req.url = '/content/thumbnail/' + contentId; }
+                      else if (reqUrl[1] == 'content-thumbnail') { req.url = '/content-thumbnail/' + contentId; }
                       else if (reqUrl[2] == 'download') { req.url = '/file/download/' + contentId; }
                       else if (reqUrl[2] == 'trash') { req.url = '/trash'; } 
                     } else if (req.method == 'POST') {
@@ -161,7 +169,7 @@ pipelines:
           - action:
               headers:
                   add:
-                    journey_id: requestID
+                    journey_id: requestID,
       - expression:
         - action:
             jscode: |
@@ -183,6 +191,20 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: content-vault 
+              changeOrigin: true
+
+  domainDataApi:
+    apiEndpoints:
+      - domain-data
+    policies:
+      - expression:
+          - action:
+              jscode: |
+                      let industry =  req.query.industry, name = req.query.name;
+                      req.url = '/domaindata?industry=' + industry + '&name=' + name;
+      - proxy:
+          - action:
+              serviceEndpoint: domain-data
               changeOrigin: true
 
   N/A:

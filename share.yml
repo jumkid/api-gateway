@@ -1,4 +1,4 @@
-openapi: 3.0.3
+penapi: 3.0.3
 info:
   version: v1
   title: activity-service API
