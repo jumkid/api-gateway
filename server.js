@@ -1,6 +1,6 @@
 const path = require('path');
-const gateway = require('express-gateway');
+const exGateway = require('express-gateway');
 
-gateway()
+exGateway()
   .load(path.join(__dirname, 'config'))
   .run();
