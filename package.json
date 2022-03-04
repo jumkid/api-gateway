@@ -16,7 +16,7 @@
     "copyfiles": "^2.4.1"
   },
   "dependencies": {
-    "express-gateway": "^1.4.0",
+    "express-gateway": "^1.16.9",
     "pm2": "^5.2.0"
   }
 }
