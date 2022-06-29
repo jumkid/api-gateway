@@ -1,0 +1,15 @@
+{
+  "endpoint": "/v1/content/gallery/{id}",
+  "method": "PUT",
+  "output_encoding": "no-op",
+  "input_headers": ["Authorization", "Content-Type"],
+  "backend": [
+    {
+      "url_pattern": "/gallery/{id}",
+      "encoding": "json",
+      "sd": "static",
+      "method": "PUT",
+      "host": ["{{ .contentVaultHost }}"]
+    }
+  ]
+}

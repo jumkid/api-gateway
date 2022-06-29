@@ -1,0 +1,16 @@
+{
+  "endpoint": "/v1/content/metadata/search",
+  "method": "GET",
+  "output_encoding": "no-op",
+  "input_headers": ["Authorization"],
+  "input_query_strings": ["q", "size"],
+  "backend": [
+    {
+      "url_pattern": "/metadata",
+      "encoding": "json",
+      "sd": "static",
+      "method": "GET",
+      "host": ["{{ .contentVaultHost }}"]
+    }
+  ]
+}

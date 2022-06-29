@@ -1,9 +1,8 @@
 openapi: 3.1.0
-
 info:
   version: v1
   title: API Gateway
-  description: Apit gateway project which follows the OpenAPI spec
+  description: Api gateway project which supports the OpenAPI spec
   termsOfService: 'https://www.jumkid.com/terms-of-use'
   contact:
     name: Chooli Yip
@@ -12,18 +11,16 @@ info:
   license:
     name: Jumkid Public License
     url: 'http://license.jumkid.com'
-
 servers:
   - description: Testing
     url: 'http://localhost'
   - description: Live production
     url: 'http://api.jumkid.com'
-
 tags:
   - name: v1
-    description: API for version 1.0.0
+    description: API for version 1.X.X
   - name: test
     description: API for test
 
-paths: 
+paths:
   {}

@@ -1,0 +1,15 @@
+{
+  "endpoint": "/v1/content/thumbnail/{id}",
+  "method": "GET",
+  "output_encoding": "no-op",
+  "input_headers": ["Authorization"],
+  "backend": [
+    {
+      "url_pattern": "/content-thumbnail/{id}",
+      "encoding": "json",
+      "sd": "static",
+      "method": "GET",
+      "host": ["{{ .contentVaultHost }}"]
+    }
+  ]
+}

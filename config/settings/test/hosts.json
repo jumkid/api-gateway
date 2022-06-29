@@ -1,0 +1,9 @@
+{
+  "elasticsearchHost": "http://elasticsearch:9200",
+  "keycloakHost": "http://keycloak:8080",
+  "activityServiceHost": "http://activity-service:8081",
+  "contentVaultHost": "http://content-vault:8082",
+  "domainDataHost": "http://domain-data:8083",
+  "vehicleProfileHost": "http://vehicle-profile:8084",
+  "apiGatewayHost": "http://api-gateway"
+}

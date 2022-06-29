@@ -1,0 +1,17 @@
+{
+  "endpoint": "/v1/content/multipleUpload",
+  "method": "POST",
+  "timeout": "5s",
+  "output_encoding": "no-op",
+  "input_headers": ["*"],
+  "input_query_strings": ["tags"],
+  "backend": [
+    {
+      "url_pattern": "/file/multipleUpload",
+      "encoding": "json",
+      "sd": "static",
+      "method": "POST",
+      "host": ["{{ .contentVaultHost }}"]
+    }
+  ]
+}

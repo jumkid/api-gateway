@@ -1,0 +1,15 @@
+{
+  "endpoint": "/v1/content/metadata/{id}",
+  "method": "PUT",
+  "output_encoding": "no-op",
+  "input_headers": ["Authorization", "Content-Type"],
+  "backend": [
+    {
+      "url_pattern": "/metadata/{id}",
+      "encoding": "json",
+      "sd": "static",
+      "method": "PUT",
+      "host": ["{{ .contentVaultHost }}"]
+    }
+  ]
+}

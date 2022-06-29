@@ -1,0 +1,42 @@
+{
+  "items": [
+    {
+      "type": "divider",
+      "title": "APIS"
+    },
+    {
+      "type": "item",
+      "title": "API Gateway",
+      "uri": "/api.yml"
+    },
+    {
+      "type": "divider",
+      "title": "Schemas"
+    },
+    {
+      "type": "item",
+      "title": "applications",
+      "uri": "/config/models/applications.json"
+    },
+    {
+      "type": "item",
+      "title": "credentials",
+      "uri": "/config/models/credentials.json"
+    },
+    {
+      "type": "item",
+      "title": "users",
+      "uri": "/config/models/users.json"
+    },
+    {
+      "type": "item",
+      "title": "content-api.yml",
+      "uri": "/content-api.yaml"
+    },
+    {
+      "type": "item",
+      "title": "variables",
+      "uri": "/variables.json"
+    }
+  ]
+}

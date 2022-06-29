@@ -1,0 +1,16 @@
+{
+  "endpoint": "/v1/content",
+  "method": "POST",
+  "output_encoding": "no-op",
+  "input_headers": ["Authorization"],
+  "input_query_strings": ["title", "content"],
+  "backend": [
+    {
+      "url_pattern": "/content",
+      "encoding": "json",
+      "sd": "static",
+      "method": "POST",
+      "host": ["{{ .contentVaultHost }}"]
+    }
+  ]
+}

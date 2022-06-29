@@ -1,0 +1,15 @@
+{
+  "endpoint": "/v1/content/trash",
+  "method": "GET",
+  "output_encoding": "no-op",
+  "input_headers": ["Authorization"],
+  "backend": [
+    {
+      "url_pattern": "/trash",
+      "encoding": "json",
+      "sd": "static",
+      "method": "GET",
+      "host": ["{{ .contentVaultHost }}"]
+    }
+  ]
+}

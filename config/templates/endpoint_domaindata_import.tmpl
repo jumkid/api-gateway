@@ -1,0 +1,15 @@
+{
+  "endpoint": "/v1/domaindata/import",
+  "method": "POST",
+  "output_encoding": "no-op",
+  "input_headers": ["*"],
+  "backend": [
+    {
+      "url_pattern": "/domaindata/import",
+      "encoding": "json",
+      "sd": "static",
+      "method": "POST",
+      "host": ["{{ .domainDataHost }}"]
+    }
+  ]
+}

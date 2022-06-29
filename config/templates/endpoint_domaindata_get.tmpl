@@ -1,0 +1,16 @@
+{
+  "endpoint": "/v1/domaindata",
+  "method": "GET",
+  "output_encoding": "no-op",
+  "input_headers": ["Authorization"],
+  "input_query_strings": ["industry", "name"],
+  "backend": [
+    {
+      "url_pattern": "/domaindata",
+      "encoding": "json",
+      "sd": "static",
+      "method": "GET",
+      "host": ["{{ .domainDataHost }}"]
+    }
+  ]
+}

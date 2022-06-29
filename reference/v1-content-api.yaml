@@ -1,0 +1,441 @@
+openapi: 3.1.0
+info:
+  version: v1
+  title: API Gateway
+  description: Api gateway project which supports the OpenAPI spec
+  termsOfService: 'https://www.jumkid.com/terms-of-use'
+  contact:
+    name: Chooli Yip
+    url: jumkid.com
+    email: chooli.yip@gmail.com
+  license:
+    name: Jumkid Public License
+    url: 'http://license.jumkid.com'
+servers:
+  - description: Testing
+    url: 'http://localhost'
+  - description: Live production
+    url: 'http://api.jumkid.com'
+tags:
+  - name: v1
+    description: API for version 1.X.X
+  - name: test
+    description: API for test
+
+paths:
+  '/v1/content/{id}':
+    get:
+      summary: get text content
+      tags:
+        - v1
+        - test
+      operationId: getTextContent
+      description: get plain text content by id
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-text'
+  '/v1/content':
+    post:
+      tags:
+        - v1
+        - test
+      operationId: addTextContent
+      description: add text content by id
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/title'
+        - $ref: '#/components/parameters/content'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-text'
+  '/v1/content/html':
+    post:
+      tags:
+        - v1
+        - test
+      operationId: addHtmlContent
+      description: add text content by id
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/title'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/200-text'
+  '/v1/content/stream/{id}':
+    get:
+      tags:
+        - v1
+        - test
+      operationId: getStreamingContent
+      description: get streaming content by id
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-binary'
+  '/v1/content/thumbnail/{id}':
+    get:
+      tags:
+        - v1
+        - test
+      operationId: getThumbnailContent
+      description: get thumbnail content by id
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-binary'
+  '/v1/content/metadata/{id}':
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - v1
+        - test
+      operationId: getContentMetadata
+      description: get content metadata by id
+      security:
+        - Authorization: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200-metadata'
+    put:
+      tags:
+        - v1
+      operationId: updateMetadata
+      description: update metadata for media file
+      security:
+        - Authorization: []
+      requestBody:
+        description: metadata json object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-metadata'
+  '/v1/content/metadata/search':
+    get:
+      tags:
+        - v1
+        - test
+      operationId: searchContentMetadata
+      description: search content metadata by query parameter
+      security:
+        - Authorization: []
+      parameters:
+        - name: q
+          in: query
+          required: false
+          description: query string
+          schema:
+            type: string
+        - name: size
+          in: query
+          required: false
+          description: size of result set
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/200-metadata-list'
+  '/v1/content/upload':
+    post:
+      tags:
+        - v1
+        - test
+      operationId: upload
+      description: upload a file as content
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/title'
+        - $ref: '#/components/parameters/content'
+        - $ref: '#/components/parameters/tags'
+      requestBody:
+        $ref: '#/components/requestBodies/file'
+      responses:
+        '202':
+          $ref: '#/components/responses/200-metadata'
+  /v1/content/multipleUpload:
+    post:
+      tags:
+        - v1
+        - test
+      operationId: multipleUpload
+      description: multiple files upload
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/tags'
+      requestBody:
+        $ref: '#/components/requestBodies/files'
+      responses:
+        '202':
+          $ref: '#/components/responses/200-metadata'
+  '/v1/content/download/{id}':
+    get:
+      tags:
+        - v1
+        - test
+      operationId: downloadContent
+      description: download content by id
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-binary'
+  '/v1/content/gallery':
+    post:
+      tags:
+        - v1
+      operationId: uploadGallery
+      description: upload multiple file as gallery
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/title'
+        - $ref: '#/components/parameters/content'
+        - $ref: '#/components/parameters/tags'
+      requestBody:
+        $ref: '#/components/requestBodies/files'
+      responses:
+        '202':
+          $ref: '#/components/responses/200-metadata'
+  '/v1/content/gallery/{id}':
+    parameters:
+        - $ref: '#/components/parameters/id'
+    post:
+      tags:
+        - v1
+        - test
+      operationId: updateGallery
+      description: update a gallery
+      security:
+        - Authorization: []
+      parameters:
+        - name: featuredId
+          in: query
+          required: false
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/files'
+      responses:
+        '202':
+          description: ACCEPTED
+          $ref: '#/components/responses/200-metadata'
+    put:
+      tags:
+        - v1
+      operationId: updatePartialGallery
+      description: update a gallery
+      security:
+        - Authorization: []
+      requestBody:
+        description: gallery json object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metadata'
+      responses:
+        '202':
+          description: ACCEPTED
+          $ref: '#/components/responses/200-metadata'
+  '/v1/content/trash':
+    get:
+      tags:
+        - test
+        - v1
+      operationId: getAllTrash
+      description: get all trash items buy user
+      security:
+        - Authorization: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200-metadata'
+    delete:
+      tags:
+        - v1
+      operationId: emptyTrash
+      description: delete all files in the trash by user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: number
+components:
+  schemas:
+    Metadata:
+      description: Model of content metadata
+      properties:
+        id:
+          type: string
+          example: 1mWG-nQBWmmN0po1BUoG
+        filename:
+          type: string
+          example: foo.txt
+        mimeType:
+          type: string
+          example: text/plain
+        size:
+          type: integer
+          description: file size in byte
+        title:
+          type: string
+        content:
+          type: string
+        activated:
+          type: boolean
+        createdBy:
+          type: string
+        creationDate:
+          $ref: 'https://raw.githubusercontent.com/jumkid/share-jar/master/src/main/resources/share.yaml#/components/schemas/LocalDateTime'
+        modifiedBy:
+          type: string
+        modificationDate:
+          $ref: 'https://raw.githubusercontent.com/jumkid/share-jar/master/src/main/resources/share.yaml#/components/schemas/LocalDateTime'
+        props:
+          type: array
+          items:
+            description: list of additional properties
+            properties:
+              name:
+                type: string
+              textValue:
+                type: string
+              dateValue:
+                $ref: 'https://raw.githubusercontent.com/jumkid/share-jar/master/src/main/resources/share.yaml#/components/schemas/LocalDateTime'
+              numberValue:
+                type: integer
+        tags:
+          type: array
+          items:
+            description: list of tags
+            type: string
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Metadata'
+    ThumbnailSize:
+      type: string
+      enum:
+        - small
+        - medium
+        - large
+    MediaFileField:
+      type: string
+      enum:
+        - title
+        - filename
+        - mimeType
+        - module
+        - content
+    MediaFileModule:
+      type: string
+      enum:
+        - FILE
+        - TEXT
+        - HTML
+        - GALLERY
+  responses:
+    200-text:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: string
+    200-metadata:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Metadata'
+    200-metadata-list:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            $ref: '#/components/schemas/Metadata'
+    200-binary:
+      description: OK
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+            format: binary
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: content identifier
+      schema:
+        type: string
+    title:
+      name: title
+      in: query
+      required: false
+      description: title
+      schema:
+        type: string
+    content:
+      name: content
+      in: query
+      required: false
+      description: content
+      schema:
+        type: string
+    tags:
+      name: tags
+      in: query
+      required: false
+      description: tags of file
+      schema:
+        type: array
+        format: string
+  requestBodies:
+    file:
+      content:
+        multipart/form-data:
+          schema:
+            properties:
+              file:
+                type: string
+                format: binary
+    files:
+      content:
+        multipart/form-data:
+          schema:
+            properties:
+              files:
+                type: array
+                items: {}
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: bearer

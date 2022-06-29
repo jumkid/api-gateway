@@ -1,0 +1,16 @@
+{
+  "endpoint": "/v1/domaindata/{id}",
+  "method": "DELETE",
+  "output_encoding": "no-op",
+  "input_headers": ["Authorization"],
+  "input_query_strings": ["id"],
+  "backend": [
+    {
+      "url_pattern": "/domaindata/{id}",
+      "encoding": "no-op",
+      "sd": "static",
+      "method": "DELETE",
+      "host": ["{{ .domainDataHost }}"]
+    }
+  ]
+}

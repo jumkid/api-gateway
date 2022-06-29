@@ -1,0 +1,15 @@
+{
+  "endpoint": "/v1/content/stream/{id}",
+  "method": "GET",
+  "output_encoding": "no-op",
+  "input_headers": ["Authorization"],
+  "backend": [
+    {
+      "url_pattern": "/content/stream/{id}",
+      "encoding": "json",
+      "sd": "static",
+      "method": "GET",
+      "host": ["{{ .contentVaultHost }}"]
+    }
+  ]
+}

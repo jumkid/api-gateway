@@ -1,0 +1,185 @@
+openapi: 3.1.0
+info:
+  version: v1
+  title: API Gateway
+  description: Api gateway project which supports the OpenAPI spec
+  termsOfService: 'https://www.jumkid.com/terms-of-use'
+  contact:
+    name: Chooli Yip
+    url: jumkid.com
+    email: chooli.yip@gmail.com
+  license:
+    name: Jumkid Public License
+    url: 'http://license.jumkid.com'
+servers:
+  - description: Testing
+    url: 'http://localhost'
+  - description: Live production
+    url: 'http://api.jumkid.com'
+tags:
+  - name: v1
+    description: API for version 1.X.X
+  - name: test
+    description: API for test
+
+paths:
+  '/v1/domaindata':
+    get:
+      tags:
+        - v1
+      operationId: getDomainDataByName
+      description: get domain data by given industry and name
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/industry'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-domaindata-list'
+    post:
+      tags:
+        - v1
+      operationId: addDomainData
+      description: save a new domaindata
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/industry'
+        - $ref: '#/components/parameters/name'
+        - $ref: '#/components/parameters/value'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-domaindata'
+      summary: Add raw DomainData
+  '/v1/domaindata/{id}':
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - v1
+      operationId: getDomainData
+      description: get single domaindata
+      security:
+        - Authorization: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200-domaindata'
+    put:
+      tags:
+        - v1
+        - test
+      operationId: updateDomainData
+      description: update domaindata by id
+      security:
+        - Authorization: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainData'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-domaindata'
+    delete:
+      tags:
+        - v1
+      operationId: deleteDomainData
+      description: delete single domaindata
+      security:
+        - Authorization: []
+      responses:
+        '204':
+          description: successfully delete the domaindata by givn id
+  '/v1/domaindata/import':
+    post:
+      tags:
+        - v1
+      operationId: import
+      description: import domain data
+      security:
+        - Authorization: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: import domain data in csv format
+          content:
+            application/json:
+              schema:
+                type: integer
+
+components:
+  schemas:
+    DomainData:
+      description: Model of media file
+      properties:
+        id:
+          type: string
+          example: 1mWG-nQBWmmN0po1BUoG
+        industry:
+          type: string
+          example: automobile
+        name:
+          type: string
+          example: weekday
+        value:
+          type: string
+          example: Monday
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    industry:
+      name: industry
+      in: query
+      required: false
+      schema:
+        type: string
+    name:
+      name: name
+      in: query
+      required: false
+      schema:
+        type: string
+    value:
+      name: value
+      in: query
+      required: false
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: number
+
+  responses:
+    200-domaindata:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            items:
+              $ref: '#/components/schemas/DomainData'
+    200-domaindata-list:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/responses/200-domaindata'
+security:
+  - Authorization: []
