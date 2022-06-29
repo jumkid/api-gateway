@@ -11,7 +11,8 @@
       "encoding": "json",
       "sd": "static",
       "method": "POST",
-      "host": ["{{ .contentVaultHost }}"]
+      "host": ["{{ .contentVaultHost }}"],
+      "extra_config": {{ template "backend_extra_config.tmpl" . }}
     }
   ]
 }

@@ -9,7 +9,8 @@
       "encoding": "json",
       "sd": "static",
       "method": "PUT",
-      "host": ["{{ .domainDataHost }}"]
+      "host": ["{{ .domainDataHost }}"],
+      "extra_config": {{ template "backend_extra_config.tmpl" . }}
     }
   ]
 }

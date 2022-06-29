@@ -10,7 +10,8 @@
       "encoding": "no-op",
       "sd": "static",
       "method": "DELETE",
-      "host": ["{{ .domainDataHost }}"]
+      "host": ["{{ .domainDataHost }}"],
+      "extra_config": {{ template "backend_extra_config.tmpl" . }}
     }
   ]
 }
