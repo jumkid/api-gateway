@@ -17,6 +17,7 @@ RUN krakend check -c /tmp/krakend.json --lint
 
 FROM devopsfaith/krakend:latest
 COPY --from=builder --chown=krakend /tmp/krakend.json .
+COPY --from=builder --chown=krakend /etc/krakend/plugins ./plugins
 # Uncomment with Enterprise image:
 # COPY LICENSE /etc/krakend/LICENSE
 

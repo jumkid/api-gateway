@@ -133,6 +133,22 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/200-metadata'
+    delete:
+      tags:
+        - v1
+        - test
+      operationId: deleteContentMetadata
+      description: get content metadata by id
+      security:
+        - Authorization: []
+      responses:
+        '204':
+          description: successfully delete the metadata by givn id
+          content:
+            application/json:
+              schema:
+                type: integer
+
   '/v1/content/metadata/search':
     get:
       tags:
@@ -280,6 +296,8 @@ paths:
         - v1
       operationId: emptyTrash
       description: delete all files in the trash by user
+      security:
+        - Authorization: []
       responses:
         '200':
           description: OK

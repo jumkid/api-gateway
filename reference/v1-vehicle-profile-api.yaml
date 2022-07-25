@@ -23,7 +23,7 @@ tags:
     description: API for test
 
 paths:
-  /vehicle:
+  '/v1/vehicle':
     get:
       tags:
         - v1
@@ -53,7 +53,7 @@ paths:
           $ref: '#/components/responses/201-created'
         '403':
           $ref: '#/components/responses/403-access-deny'
-  '/vehicle/{id}':
+  '/v1/vehicle/{id}':
     get:
       tags:
         - v1
@@ -145,18 +145,25 @@ components:
       properties:
         vehicleId:
           type: string
+          example: ''
         name:
           type: string
+          example: 'system-stock'
         make:
           type: string
+          example: 'toyota'
         model:
           type: string
+          example: 'highlander'
         modelYear:
           type: integer
+          example: 2014
         trimLevel:
           type: string
+          example: 'LE'
         mediaGalleryId:
           type: string
+          example: ''
         accessScope:
           $ref: '#/components/schemas/AccessScope'
         vehicleEngine:
@@ -165,10 +172,12 @@ components:
           $ref: '#/components/schemas/VehicleTransmission'
         createdBy:
           type: string
+          example: ''
         creationDate:
           $ref: 'https://raw.githubusercontent.com/jumkid/share-jar/master/src/main/resources/share.yaml#/components/schemas/LocalDateTime'
         modifiedBy:
           type: string
+          example: ''
         modificationDate:
           $ref: 'https://raw.githubusercontent.com/jumkid/share-jar/master/src/main/resources/share.yaml#/components/schemas/LocalDateTime'
     VehicleEngine:
@@ -176,35 +185,61 @@ components:
       properties:
         vehicleEngineId:
           type: integer
+          example: -1
         name:
           type: string
+          example: '3.5L V6'
         type:
           type: string
+          example: 'Regular Unleaded V-6'
         cylinder:
           type: integer
+          example: 6
+        displacement: 
+          type: number
+          example: 3.5
         fuelType:
           type: string
+          example: 'gasoline'
         horsepower:
           type: integer
+          example: 270
+        horsepowerRpm:
+          type: integer
+          example: 6200  
         torque:
           type: integer
+          example: 248
+        torqueRpm:
+          type: integer
+          example: 4700
         manufacturerEngineCode:
           type: string
+          example: ''
     VehicleTransmission:
       description: Model of vehicle transmission
       properties:
         vehicleTransmissionId:
           type: integer
+          example: -1
         name:
           type: string
+          example: '6 speed AT'
         type:
           type: string
+          example: 'Automatic'
+        drivetrain:
+          type: string
+          example: 'all wheel drive'  
         availability:
           type: string
+          example: ''
         automaticType:
           type: string
+          example: 'AMT'
         numberOfSpeeds:
           type: integer
+          example: 6
     AccessScope:
       type: string
       enum:

@@ -2,15 +2,15 @@
   "endpoint": "/v1/content/thumbnail/{id}",
   "method": "GET",
   "output_encoding": "no-op",
-  "input_headers": ["Authorization"],
+  "input_headers": ["Authorization", "Journey-ID"],
   "backend": [
     {
       "url_pattern": "/content-thumbnail/{id}",
       "encoding": "json",
       "sd": "static",
       "method": "GET",
-      "host": ["{{ .contentVaultHost }}"],
-      "extra_config": {{ template "backend_extra_config.tmpl" . }}
+      "host": ["{{ .contentVaultHost }}"]
     }
-  ]
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
 }

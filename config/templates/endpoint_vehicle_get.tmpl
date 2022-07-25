@@ -1,0 +1,16 @@
+{
+  "endpoint": "/v1/vehicle",
+  "method": "GET",
+  "output_encoding": "no-op",
+  "input_headers": ["Authorization", "Journey-ID"],
+  "backend": [
+    {
+      "url_pattern": "/vehicle",
+      "encoding": "json",
+      "sd": "static",
+      "method": "GET",
+      "host": ["{{ .vehicleProfileHost }}"]
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}

@@ -2,15 +2,15 @@
   "endpoint": "/v1/domaindata/{id}",
   "method": "PUT",
   "output_encoding": "no-op",
-  "input_headers": ["Authorization", "Content-Type"],
+  "input_headers": ["Authorization", "Content-Type", "Journey-ID"],
   "backend": [
     {
       "url_pattern": "/domaindata/{id}",
       "encoding": "json",
       "sd": "static",
       "method": "PUT",
-      "host": ["{{ .domainDataHost }}"],
-      "extra_config": {{ template "backend_extra_config.tmpl" . }}
+      "host": ["{{ .domainDataHost }}"]
     }
-  ]
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
 }

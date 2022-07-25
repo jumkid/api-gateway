@@ -2,7 +2,7 @@
   "endpoint": "/v1/domaindata/{id}",
   "method": "DELETE",
   "output_encoding": "no-op",
-  "input_headers": ["Authorization"],
+  "input_headers": ["Authorization", "Journey-ID"],
   "input_query_strings": ["id"],
   "backend": [
     {
@@ -10,8 +10,8 @@
       "encoding": "no-op",
       "sd": "static",
       "method": "DELETE",
-      "host": ["{{ .domainDataHost }}"],
-      "extra_config": {{ template "backend_extra_config.tmpl" . }}
+      "host": ["{{ .domainDataHost }}"]
     }
-  ]
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
 }

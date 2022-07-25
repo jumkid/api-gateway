@@ -1,0 +1,16 @@
+{
+  "endpoint": "/v1/vehicle/{id}",
+  "method": "PUT",
+  "output_encoding": "no-op",
+  "input_headers": ["Authorization", "Content-Type", "Journey-ID"],
+  "backend": [
+    {
+      "url_pattern": "/vehicle/{id}",
+      "encoding": "json",
+      "sd": "static",
+      "method": "PUT",
+      "host": ["{{ .vehicleProfileHost }}"]
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}

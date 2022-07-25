@@ -6,6 +6,10 @@
   "output_encoding": "json",
   "name": "api",
   "port": 80,
+  "plugin": {
+    "pattern":".so",
+    "folder": "/etc/krakend/plugins/"
+  },
   "extra_config": {{ template "service_extra_config.tmpl" .config }},
 
   "endpoints": [
@@ -15,7 +19,6 @@
     {{ template "endpoint_content_thumbnail.tmpl" .hosts }},
     {{ template "endpoint_content_streaming.tmpl" .hosts }},
     {{ template "endpoint_content_download.tmpl" .hosts }},
-
     {{ template "endpoint_content_save_text.tmpl" .hosts }},
     {{ template "endpoint_content_save_html.tmpl" .hosts }},
     {{ template "endpoint_content_multiple_upload.tmpl" .hosts }},
@@ -24,7 +27,6 @@
     {{ template "endpoint_content_gallery_update_with_upload.tmpl" .hosts }},
     {{ template "endpoint_content_gallery_update.tmpl" .hosts }},
     {{ template "endpoint_content_update_metadata.tmpl" .hosts }},
-
     {{ template "endpoint_content_delete_metadata.tmpl" .hosts }},
     {{ template "endpoint_content_get_trash.tmpl" .hosts }},
     {{ template "endpoint_content_empty_trash.tmpl" .hosts }},
@@ -34,7 +36,13 @@
     {{ template "endpoint_domaindata_save.tmpl" .hosts }},
     {{ template "endpoint_domaindata_update.tmpl" .hosts }},
     {{ template "endpoint_domaindata_import.tmpl" .hosts }},
-    {{ template "endpoint_domaindata_delete.tmpl" .hosts }}
+    {{ template "endpoint_domaindata_delete.tmpl" .hosts }},
+
+    {{ template "endpoint_vehicle_get_by_id.tmpl" .hosts }},
+    {{ template "endpoint_vehicle_get.tmpl" .hosts }},
+    {{ template "endpoint_vehicle_save.tmpl" .hosts }},
+    {{ template "endpoint_vehicle_update.tmpl" .hosts }},
+    {{ template "endpoint_vehicle_delete_by_id.tmpl" .hosts }}
   ]
 
 }

@@ -1,10 +1,17 @@
 {
   "telemetry/logging": {
-    "level": "INFO",
+    "level": "DEBUG",
     "prefix": "[API-Gateway]",
-    "syslog": true,
+    "syslog": false,
     "stdout": true,
     "format": "custom",
-    "custom_format": "JID: %{message}"
+    "custom_format": "{\"@version\": 1, \"level\": \"%{level}\", \"message\": \"%{message}\"}"
+  },
+  "security/cors": {
+    "allow_origins": [ "http://api-gateway","http://api.jumkid.com", "http://localhost" ],
+    "allow_methods": [ "GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS" ],
+    "allow_headers": [ "Origin", "Authorization", "Content-Type" ],
+    "expose_headers": [ "Content-Length" ],
+    "max_age": "12h"
   }
 }
