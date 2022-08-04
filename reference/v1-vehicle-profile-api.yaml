@@ -33,7 +33,7 @@ paths:
         - Authorization: []
       responses:
         '200':
-          $ref: '#/components/responses/200-vehicle'
+          $ref: '#/components/responses/200-vehicles'
         '403':
           $ref: '#/components/responses/403-access-deny'
     post:
@@ -111,7 +111,40 @@ paths:
               schema:
                 items:
                   $ref: 'https://raw.githubusercontent.com/jumkid/share-jar/master/src/main/resources/share.yaml#/components/schemas/CustomErrorResponse'
-  /vehicle/import:
+  
+  '/v1/vehicle/search':
+    get:
+      tags:
+        - v1
+        - test
+      operationId: searchUserVehicle
+      description: search vehicle profiles with keyword
+      security:
+        - Authorization: []
+      parameters:
+        - name: keyword
+          description: search keyword
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: size
+          description: search result size
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: page
+          description: page number of search result
+          in: query
+          required: true
+          schema:
+            type: integer    
+      responses:
+        '200':
+          $ref: '#/components/responses/200-vehicles'
+          
+  '/v1/vehicle/import':
     post:
       tags:
         - v1
@@ -128,9 +161,6 @@ paths:
                 file:
                   type: string
                   format: binary
-                tags:
-                  type: array
-                  format: string
       responses:
         '200':
           description: import vehicle data in csv format
@@ -251,9 +281,15 @@ components:
       content:
         application/json:
           schema:
+            $ref: '#/components/schemas/Vehicle'
+    200-vehicles:
+      description: OK
+      content:
+        application/json:
+          schema:
             type: array
             items:
-              $ref: '#/components/schemas/Vehicle'
+              $ref: '#/components/schemas/Vehicle'          
     403-access-deny:
       description: FORBIDDEN
       content:

@@ -39,9 +39,11 @@
     {{ template "endpoint_domaindata_delete.tmpl" .hosts }},
 
     {{ template "endpoint_vehicle_get_by_id.tmpl" .hosts }},
+    {{ template "endpoint_vehicle_search.tmpl" .hosts }},
     {{ template "endpoint_vehicle_get.tmpl" .hosts }},
     {{ template "endpoint_vehicle_save.tmpl" .hosts }},
     {{ template "endpoint_vehicle_update.tmpl" .hosts }},
+    {{ template "endpoint_vehicle_import.tmpl" .hosts }},
     {{ template "endpoint_vehicle_delete_by_id.tmpl" .hosts }}
   ]
 
