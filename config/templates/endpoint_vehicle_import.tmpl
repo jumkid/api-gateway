@@ -1,12 +1,12 @@
 {
-  "endpoint": "/v1/vehicle/import",
+  "endpoint": "/v1/vehicles/import",
   "method": "POST",
   "timeout": "5s",
   "output_encoding": "no-op",
   "input_headers": ["*"],
   "backend": [
     {
-      "url_pattern": "/vehicle/import",
+      "url_pattern": "/vehicles/import",
       "encoding": "json",
       "sd": "static",
       "method": "POST",

@@ -1,12 +1,12 @@
 {
-  "endpoint": "/v1/vehicle/search",
+  "endpoint": "/v1/vehicles/search",
   "method": "GET",
   "output_encoding": "no-op",
   "input_headers": ["Authorization", "Content-Type", "Journey-ID"],
   "input_query_strings": ["keyword", "size", "page"],
   "backend": [
     {
-      "url_pattern": "/vehicle/search",
+      "url_pattern": "/vehicles/search",
       "encoding": "json",
       "sd": "static",
       "method": "GET",

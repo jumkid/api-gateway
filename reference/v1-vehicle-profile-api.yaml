@@ -23,7 +23,7 @@ tags:
     description: API for test
 
 paths:
-  '/v1/vehicle':
+  '/v1/vehicles':
     get:
       tags:
         - v1
@@ -53,7 +53,7 @@ paths:
           $ref: '#/components/responses/201-created'
         '403':
           $ref: '#/components/responses/403-access-deny'
-  '/v1/vehicle/{id}':
+  '/v1/vehicles/{id}':
     get:
       tags:
         - v1
@@ -112,7 +112,7 @@ paths:
                 items:
                   $ref: 'https://raw.githubusercontent.com/jumkid/share-jar/master/src/main/resources/share.yaml#/components/schemas/CustomErrorResponse'
   
-  '/v1/vehicle/search':
+  '/v1/vehicles/search':
     get:
       tags:
         - v1
@@ -144,7 +144,7 @@ paths:
         '200':
           $ref: '#/components/responses/200-vehicles'
           
-  '/v1/vehicle/import':
+  '/v1/vehicles/import':
     post:
       tags:
         - v1

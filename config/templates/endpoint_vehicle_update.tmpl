@@ -1,11 +1,11 @@
 {
-  "endpoint": "/v1/vehicle/{id}",
+  "endpoint": "/v1/vehicles/{id}",
   "method": "PUT",
   "output_encoding": "no-op",
   "input_headers": ["Authorization", "Content-Type", "Journey-ID"],
   "backend": [
     {
-      "url_pattern": "/vehicle/{id}",
+      "url_pattern": "/vehicles/{id}",
       "encoding": "json",
       "sd": "static",
       "method": "PUT",
