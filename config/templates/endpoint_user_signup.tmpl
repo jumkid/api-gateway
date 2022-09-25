@@ -1,0 +1,32 @@
+{
+  "endpoint": "/v1/user/signup",
+  "method": "POST",
+  "timeout": "5s",
+  "output_encoding": "no-op",
+  "input_headers": ["Content-Type"],
+  "backend": [
+    {
+      "url_pattern": "/auth/admin/realms/jumkid/users",
+      "encoding": "json",
+      "sd": "static",
+      "method": "POST",
+      "host": [ "{{ .keycloakHost }}" ],
+      "extra_config": {
+        "auth/client-credentials": {
+          "client_id": "{{ .keycloakAdminClientId }}",
+          "client_secret": "{{ .keycloakAdminClientSecret }}",
+          "token_url": "{{ .keycloakHost }}/auth/realms/master/protocol/openid-connect/token",
+          "scopes": "roles",
+          "endpoint_params": {
+            "client_id": ["{{ .keycloakAdminClientId }}"],
+            "client_secret": ["{{ .keycloakAdminClientSecret }}"],
+            "username": ["{{ .keycloakAdminUserName }}"],
+            "password": ["{{ .keycloakAdminUserPassword }}"],
+            "grant_type": ["{{ .keycloakGrantType }}"]
+          }
+        }
+      }
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}

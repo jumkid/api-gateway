@@ -1,0 +1,123 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 4pdt9huoucm0x
+info:
+  version: v1
+  title: API Gateway
+  description: Api gateway project which supports the OpenAPI spec
+  termsOfService: 'https://www.jumkid.com/terms-of-use'
+  contact:
+    name: Chooli Yip
+    url: jumkid.com
+    email: chooli.yip@gmail.com
+  license:
+    name: Jumkid Public License
+    url: 'http://license.jumkid.com'
+servers:
+  - description: Testing
+    url: 'http://localhost'
+  - description: Live production
+    url: 'http://api.jumkid.com'
+tags:
+  - name: v1
+    description: API for version 1.X.X
+  - name: test
+    description: API for test
+paths:
+  /v1/activities:
+    get:
+      tags: ['v1']
+      operationId: getActivities
+      description: get all activities
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'https://raw.githubusercontent.com/jumkid/activity-service/master/src/main/resources/api.yml#/components/schemas/Activity'
+
+    post:
+      tags: ['v1']
+      operationId: addActivity
+      description: add new activity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'https://raw.githubusercontent.com/jumkid/activity-service/master/src/main/resources/api.yml#/components/schemas/Activity'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-activity'
+
+  /v1/activities/{activityId}:
+    get:
+      tags: ['v1']
+      operationId: getActivity
+      description: get existing activity by id
+      parameters:
+        - $ref: '#/components/parameters/activityId'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-activity'
+
+    put:
+      tags: ['v1']
+      operationId: updateActivity
+      description: update existing activity
+      parameters:
+        - $ref: '#/components/parameters/activityId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'https://raw.githubusercontent.com/jumkid/activity-service/master/src/main/resources/api.yml#/components/schemas/Activity'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-activity'
+
+    delete:
+      tags: ['v1']
+      operationId: deleteActivity
+      description: delete existsing activity
+      parameters:
+        - $ref: '#/components/parameters/activityId'
+      responses:
+        '204':
+          description: no content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  errorCode:
+                    type: string
+                  msg:
+                    type: string
+                  data:
+                    type: string
+
+components:
+  parameters:
+    activityId:
+      name: activityId
+      in: path
+      required: true
+      description: mediafile identifier
+      schema:
+        type: string
+  
+  responses:
+    200-activity:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'https://raw.githubusercontent.com/jumkid/activity-service/master/src/main/resources/api.yml#/components/schemas/Activity'
+
+security:
+  - Authorization: []

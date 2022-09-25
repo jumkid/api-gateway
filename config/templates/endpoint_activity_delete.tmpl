@@ -1,0 +1,17 @@
+{
+  "endpoint": "/v1/activities/{id}",
+  "method": "DELETE",
+  "output_encoding": "no-op",
+  "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
+  "input_query_strings": ["id"],
+  "backend": [
+    {
+      "url_pattern": "/activities/{id}",
+      "encoding": "no-op",
+      "sd": "static",
+      "method": "DELETE",
+      "host": ["{{ .activityServiceHost }}"]
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}

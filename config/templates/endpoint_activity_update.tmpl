@@ -1,0 +1,16 @@
+{
+  "endpoint": "/v1/activities/{id}",
+  "method": "PUT",
+  "output_encoding": "no-op",
+  "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
+  "backend": [
+    {
+      "url_pattern": "/activities/{id}",
+      "encoding": "json",
+      "sd": "static",
+      "method": "PUT",
+      "host": ["{{ .activityServiceHost }}"]
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}

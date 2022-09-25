@@ -13,6 +13,14 @@
   "extra_config": {{ template "service_extra_config.tmpl" .config }},
 
   "endpoints": [
+    {{ template "endpoint_user_signup.tmpl" .hosts }},
+
+    {{ template "endpoint_activities_get.tmpl" .hosts }},
+    {{ template "endpoint_activity_delete.tmpl" .hosts }},
+    {{ template "endpoint_activity_get_by_id.tmpl" .hosts }},
+    {{ template "endpoint_activity_save.tmpl" .hosts }},
+    {{ template "endpoint_activity_update.tmpl" .hosts }},
+
     {{ template "endpoint_content_get_text.tmpl" .hosts }},
     {{ template "endpoint_content_get_metadata.tmpl" .hosts }},
     {{ template "endpoint_content_search_metadata.tmpl" .hosts }},
