@@ -1,4 +1,6 @@
 openapi: 3.1.0
+x-stoplight:
+  id: 75b150f0079b4
 info:
   version: v1
   title: API Gateway
@@ -21,9 +23,8 @@ tags:
     description: API for version 1.X.X
   - name: test
     description: API for test
-
 paths:
-  '/v1/vehicles':
+  /v1/vehicles:
     get:
       tags:
         - v1
@@ -111,8 +112,7 @@ paths:
               schema:
                 items:
                   $ref: 'https://raw.githubusercontent.com/jumkid/share-jar/master/src/main/resources/share.yaml#/components/schemas/CustomErrorResponse'
-  
-  '/v1/vehicles/search':
+  /v1/vehicles/search:
     get:
       tags:
         - v1
@@ -139,12 +139,11 @@ paths:
           in: query
           required: true
           schema:
-            type: integer    
+            type: integer
       responses:
         '200':
           $ref: '#/components/responses/200-vehicles'
-          
-  '/v1/vehicles/import':
+  /v1/vehicles/import:
     post:
       tags:
         - v1
@@ -178,19 +177,19 @@ components:
           example: ''
         name:
           type: string
-          example: 'system-stock'
+          example: system-stock
         make:
           type: string
-          example: 'toyota'
+          example: toyota
         model:
           type: string
-          example: 'highlander'
+          example: highlander
         modelYear:
           type: integer
           example: 2014
         trimLevel:
           type: string
-          example: 'LE'
+          example: LE
         mediaGalleryId:
           type: string
           example: ''
@@ -218,25 +217,25 @@ components:
           example: -1
         name:
           type: string
-          example: '3.5L V6'
+          example: 3.5L V6
         type:
           type: string
-          example: 'Regular Unleaded V-6'
+          example: Regular Unleaded V-6
         cylinder:
           type: integer
           example: 6
-        displacement: 
+        displacement:
           type: number
           example: 3.5
         fuelType:
           type: string
-          example: 'gasoline'
+          example: gasoline
         horsepower:
           type: integer
           example: 270
         horsepowerRpm:
           type: integer
-          example: 6200  
+          example: 6200
         torque:
           type: integer
           example: 248
@@ -254,19 +253,19 @@ components:
           example: -1
         name:
           type: string
-          example: '6 speed AT'
+          example: 6 speed AT
         type:
           type: string
-          example: 'Automatic'
+          example: Automatic
         drivetrain:
           type: string
-          example: 'all wheel drive'  
+          example: all wheel drive
         availability:
           type: string
           example: ''
         automaticType:
           type: string
-          example: 'AMT'
+          example: AMT
         numberOfSpeeds:
           type: integer
           example: 6
@@ -289,7 +288,7 @@ components:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/Vehicle'          
+              $ref: '#/components/schemas/Vehicle'
     403-access-deny:
       description: FORBIDDEN
       content:

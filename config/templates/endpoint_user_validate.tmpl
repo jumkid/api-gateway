@@ -1,0 +1,52 @@
+{
+  "endpoint": "/v1/user/validate",
+  "method": "GET",
+  "output_encoding": "json",
+  "input_headers": ["Content-Type"],
+  "input_query_strings": ["username", "email"],
+  "backend": [
+    {
+      "url_pattern": "/auth/admin/realms/jumkid/users",
+      "encoding": "json",
+      "sd": "static",
+      "method": "GET",
+      "host": [ "{{ .keycloakHost }}" ],
+      "is_collection": true,
+      "extra_config": {
+        "proxy": {
+          "flatmap_filter": [
+            {
+              "type": "del",
+              "args": [
+                  "collection.*.createdTimestamp",
+                  "collection.*.access",
+                  "collection.*.disableableCredentialTypes",
+                  "collection.*.emailVerified",
+                  "collection.*.firstName",
+                  "collection.*.lastName",
+                  "collection.*.id",
+                  "collection.*.notBefore",
+                  "collection.*.requiredActions",
+                  "collection.*.totp"
+              ]
+            }
+          ]
+        },
+        "auth/client-credentials": {
+          "client_id": "{{ .keycloakAdminClientId }}",
+          "client_secret": "{{ .keycloakAdminClientSecret }}",
+          "token_url": "{{ .keycloakHost }}/auth/realms/master/protocol/openid-connect/token",
+          "scopes": "roles",
+          "endpoint_params": {
+            "client_id": ["{{ .keycloakAdminClientId }}"],
+            "client_secret": ["{{ .keycloakAdminClientSecret }}"],
+            "username": ["{{ .keycloakAdminUserName }}"],
+            "password": ["{{ .keycloakAdminUserPassword }}"],
+            "grant_type": ["{{ .keycloakGrantType }}"]
+          }
+        }
+      }
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}

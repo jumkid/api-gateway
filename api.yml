@@ -26,4 +26,81 @@ tags:
     description: API for test
 
 paths: 
-  {}
+  '/v1/user/signup':
+    post:
+      tags: [v1]
+      operationId: signup
+      description: signup a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userProfile'
+      responses:
+        '201':
+          description: successfully create new user
+        '409':
+          description: fail to create user with conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorMessage:
+                    type: string
+
+  '/v1/user/validate':
+    get:
+      tags: [v1]
+      operationId: userValidate
+      description: validate key field of user profile like username, email, etc.
+      parameters:
+      - name: username
+        description: username
+        in: query
+        schema:
+          type: string             
+
+components:
+  schemas:
+    userProfile:
+      description: Model of user profile
+      properties:
+        email:
+          type: string
+          example: 'dummy@jumkid.com'
+        emailVerified:
+          type: boolean
+          example: true
+        requiredActions:
+          type: array
+          items:
+            schema:
+              type: string 
+          example: ["VERIFY_EMAIL", "UPDATE_PASSWORD", "UPDATE_PROFILE", "UPDATE_USER_LOCALE"]
+        username:
+          type: string
+          example: 'dummy'
+        firstName:  
+          type: string
+          example: 'Dummy'
+        lastName:
+          type: string
+          example: 'Foo'
+        enabled:
+          type: boolean
+          example: true
+        credentials:
+          type: array
+          items:
+            $ref: '#/components/schemas/credential'
+
+    credential:
+      description: Model of user credential more details https://www.keycloak.org/docs-api/18.0/rest-api/#_credentialrepresentation
+      properties:
+        type:
+          type: string
+          example: 'password'
+        value:
+          type: string
+          example: 'abcd1234'  
