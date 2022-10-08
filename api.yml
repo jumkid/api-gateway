@@ -48,6 +48,26 @@ paths:
                 properties:
                   errorMessage:
                     type: string
+                    
+  '/v1/user/login':
+    post:
+      tags: [v1]
+      operationId: login
+      description: login a user
+      parameters:
+      - name: username
+        description: login username
+        in: query
+        schema:
+          type: string
+      - name: password
+        description: login password
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: return list of user profile with the validate values    
 
   '/v1/user/validate':
     get:
@@ -56,10 +76,25 @@ paths:
       description: validate key field of user profile like username, email, etc.
       parameters:
       - name: username
-        description: username
+        description: unique username validation
+        in: query
+        schema:
+          type: string
+      - name: email
+        description: unique email velidation
         in: query
         schema:
           type: string             
+      responses:
+        '200':
+          description: return list of user profile with the validate values
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  collection:
+                    type: array
 
 components:
   schemas:
@@ -74,9 +109,6 @@ components:
           example: true
         requiredActions:
           type: array
-          items:
-            schema:
-              type: string 
           example: ["VERIFY_EMAIL", "UPDATE_PASSWORD", "UPDATE_PROFILE", "UPDATE_USER_LOCALE"]
         username:
           type: string

@@ -1,3 +1,7 @@
 {
-  "contentVaultHost": "http://content-vault:8082"
+  "contentVaultHost": "http://content-vault:8082",
+
+  "keycloakRealm": "jumkid",
+
+  "allowOrigins": ["http://www.jumkid.com"]
 }

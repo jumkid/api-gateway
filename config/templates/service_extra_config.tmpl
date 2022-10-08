@@ -8,7 +8,7 @@
     "custom_format": "{\"@version\": 1, \"level\": \"%{level}\", \"message\": \"%{message}\"}"
   },
   "security/cors": {
-    "allow_origins": [ "http://api-gateway","http://api.jumkid.com", "http://localhost" ],
+    "allow_origins": {{ .hosts.allowOrigins }},
     "allow_methods": [ "GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS" ],
     "allow_headers": [ "Origin", "Authorization", "Content-Type" ],
     "expose_headers": [ "Content-Length" ],

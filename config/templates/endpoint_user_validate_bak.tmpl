@@ -1,21 +1,36 @@
 {
   "endpoint": "/v1/user/validate",
   "method": "GET",
-  "output_encoding": "no-op",
-  "input_headers": ["*"],
+  "output_encoding": "json",
+  "input_headers": ["Content-Type"],
   "input_query_strings": ["username", "email"],
   "backend": [
     {
       "url_pattern": "/auth/admin/realms/jumkid/users",
-      "encoding": "no-op",
+      "encoding": "json",
       "sd": "static",
       "method": "GET",
       "host": [ "{{ .keycloakHost }}" ],
       "is_collection": true,
       "extra_config": {
-        "modifier/lua-backend": {
-          "post": "local r = response.load(); r:headers('Content-Type', 'application/json'); r:close();",
-          "live": false
+        "proxy": {
+          "flatmap_filter": [
+            {
+              "type": "del",
+              "args": [
+                  "collection.*.createdTimestamp",
+                  "collection.*.access",
+                  "collection.*.disableableCredentialTypes",
+                  "collection.*.emailVerified",
+                  "collection.*.firstName",
+                  "collection.*.lastName",
+                  "collection.*.id",
+                  "collection.*.notBefore",
+                  "collection.*.requiredActions",
+                  "collection.*.totp"
+              ]
+            }
+          ]
         },
         "auth/client-credentials": {
           "client_id": "{{ .keycloakAdminClientId }}",

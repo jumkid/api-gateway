@@ -1,0 +1,36 @@
+{
+  "endpoint": "/v1/user/login",
+  "method": "POST",
+  "output_encoding": "no-op",
+  "input_headers": ["User-Agent", "Accept"],
+  "input_query_strings": ["username", "password"],
+  "backend": [
+    {
+      "url_pattern": "/auth/realms/{{ .keycloakRealm }}/protocol/openid-connect/token",
+      "encoding": "json",
+      "sd": "static",
+      "method": "POST",
+      "host": [ "{{ .keycloakHost }}" ],
+      "deny": [
+          "scope",
+          "not-before-policy"
+      ],
+      "extra_config": {
+        "modifier/martian": {
+          "header.Modifier": {
+            "scope": [ "request" ],
+            "name": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        },
+        "modifier/lua-backend": {
+          "sources": [ "./plugins/func_libs.lua" ],
+          "pre": "local r = request.load(); local preBody = r:body(); r:body(preBody .. '&client_id={{.keycloakClientId}}&client_secret={{.keycloakClientSecret}}&grant_type={{.keycloakGrantType}}');",
+          "live": false,
+          "allow_open_libs": true
+        }
+      }
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}

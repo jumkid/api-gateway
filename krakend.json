@@ -10,9 +10,10 @@
     "pattern":".so",
     "folder": "/etc/krakend/plugins/"
   },
-  "extra_config": {{ template "service_extra_config.tmpl" .config }},
+  "extra_config": {{ template "service_extra_config.tmpl" . }},
 
   "endpoints": [
+    {{ template "endpoint_user_login.tmpl" .hosts }},
     {{ template "endpoint_user_signup.tmpl" .hosts }},
     {{ template "endpoint_user_validate.tmpl" .hosts }},
 

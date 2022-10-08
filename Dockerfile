@@ -1,3 +1,4 @@
+# 1 - build process
 FROM devopsfaith/krakend:latest as builder
 ARG env=prod
 
@@ -15,6 +16,7 @@ RUN FC_ENABLE=1 \
 # The linting needs the final krakend.json file
 RUN krakend check -c /tmp/krakend.json --lint
 
+# 2 - runtime environment
 FROM devopsfaith/krakend:latest
 COPY --from=builder --chown=krakend /tmp/krakend.json .
 COPY --from=builder --chown=krakend /etc/krakend/plugins ./plugins
