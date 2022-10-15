@@ -167,6 +167,20 @@ paths:
             application/json:
               schema:
                 type: integer
+  /v1/vehicles/reindex:
+    get:
+      tags:
+        - v1
+      operationId: reindex
+      description: reindex vehicle data
+      security:
+        - Authorization: [ ]
+      responses:
+        '200':
+          description: reindex vehicle data
+        '403':
+          $ref: '#/components/responses/403-access-deny'
+
 components:
   schemas:
     Vehicle:

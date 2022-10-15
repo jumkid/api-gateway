@@ -1,0 +1,17 @@
+{
+  "endpoint": "/v1/vehicles/reindex",
+  "method": "GET",
+  "timeout": "10s",
+  "output_encoding": "no-op",
+  "input_headers": ["Content-Type", "Authorization"],
+  "backend": [
+    {
+      "url_pattern": "/vehicles/reindex",
+      "encoding": "json",
+      "sd": "static",
+      "method": "GET",
+      "host": ["{{ .vehicleProfileHost }}"]
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}
