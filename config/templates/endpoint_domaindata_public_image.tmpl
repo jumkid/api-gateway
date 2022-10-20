@@ -1,0 +1,16 @@
+{
+  "endpoint": "/v1/domaindata/images/{industry}/{name}/{value}",
+  "method": "GET",
+  "output_encoding": "no-op",
+  "input_headers": [ "X-Krakend-Wildcard" ],
+  "backend": [
+    {
+      "url_pattern": "/images/{industry}/{name}/{value}",
+      "encoding": "no-op",
+      "sd": "static",
+      "method": "GET",
+      "host": ["{{ .domainDataHost }}"]
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}

@@ -41,6 +41,7 @@
     {{ template "endpoint_content_get_trash.tmpl" .hosts }},
     {{ template "endpoint_content_empty_trash.tmpl" .hosts }},
 
+    {{ template "endpoint_domaindata_public_image.tmpl" .hosts }},
     {{ template "endpoint_domaindata_get_by_id.tmpl" .hosts }},
     {{ template "endpoint_domaindata_get.tmpl" .hosts }},
     {{ template "endpoint_domaindata_save.tmpl" .hosts }},
