@@ -14,8 +14,10 @@
 
   "endpoints": [
     {{ template "endpoint_user_login.tmpl" .hosts }},
-    {{ template "endpoint_user_signup.tmpl" .hosts }},
     {{ template "endpoint_user_validate.tmpl" .hosts }},
+    {{ template "!!endpoint_user_signup.tmpl" .hosts }},
+    {{ template "!!endpoint_user_get.tmpl" .hosts }},
+    {{ template "!!endpoint_user_update.tmpl" .hosts }},
 
     {{ template "endpoint_activities_get.tmpl" .hosts }},
     {{ template "endpoint_activity_delete.tmpl" .hosts }},

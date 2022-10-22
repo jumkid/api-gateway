@@ -1,15 +1,15 @@
 {
-  "endpoint": "/v1/user/signup",
-  "method": "POST",
+  "endpoint": "/v1/user/{userId}",
+  "method": "PUT",
   "timeout": "5s",
   "output_encoding": "no-op",
-  "input_headers": ["Content-Type"],
+  "input_headers": ["Content-Type", "Authorization"],
   "backend": [
     {
-      "url_pattern": "/auth/admin/realms/jumkid/users",
+      "url_pattern": "/auth/admin/realms/{{ .keycloakRealm }}/users/{userId}",
       "encoding": "json",
       "sd": "static",
-      "method": "POST",
+      "method": "PUT",
       "host": [ "{{ .keycloakHost }}" ],
       "extra_config": {
         "auth/client-credentials": {

@@ -96,6 +96,36 @@ paths:
                   collection:
                     type: array
 
+  '/v1/user/{userId}':
+    put:
+      tags: [v1]
+      operationId: update
+      description: update an existing user
+      parameters:
+        - name: userId
+          description: user keycloak id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userProfile'
+      responses:
+        '204':
+          description: successfully update new user
+        '409':
+          description: fail to create user with conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorMessage:
+                    type: string                  
+
 components:
   schemas:
     userProfile:
@@ -126,6 +156,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/credential'
+        attributes:
+          $ref: '#/components/schemas/attributes'
 
     credential:
       description: Model of user credential more details https://www.keycloak.org/docs-api/18.0/rest-api/#_credentialrepresentation
@@ -135,4 +167,14 @@ components:
           example: 'password'
         value:
           type: string
-          example: 'abcd1234'  
+          example: 'abcd1234'
+
+    attributes:
+      description: Model of user attributes https://www.keycloak.org/docs-api/18.0/rest-api/#_userrepresentation
+      properties:
+        avatar:
+          type: array
+          items:
+            schema:
+            type: string 
+
