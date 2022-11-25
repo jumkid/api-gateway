@@ -1,0 +1,17 @@
+{
+  "endpoint": "/v1/vehicles/search-public",
+  "method": "GET",
+  "output_encoding": "no-op",
+  "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
+  "input_query_strings": ["keyword", "size", "page"],
+  "backend": [
+    {
+      "url_pattern": "/vehicles/search-public",
+      "encoding": "json",
+      "sd": "static",
+      "method": "GET",
+      "host": ["{{ .vehicleProfileHost }}"]
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}

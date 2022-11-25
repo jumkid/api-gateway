@@ -1,0 +1,18 @@
+{
+  "endpoint": "/v1/content/gallery/clone/{id}",
+  "method": "POST",
+  "timeout": "30s",
+  "output_encoding": "no-op",
+  "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
+  "input_query_strings": ["title"],
+  "backend": [
+    {
+      "url_pattern": "/gallery/clone/{id}",
+      "encoding": "json",
+      "sd": "static",
+      "method": "POST",
+      "host": ["{{ .contentVaultHost }}"]
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}

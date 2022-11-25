@@ -16,6 +16,7 @@
   "contentVaultHost": "http://content-vault:8082",
   "domainDataHost": "http://domain-data:8083",
   "vehicleProfileHost": "http://vehicle-profile:8084",
+  "integrationHubHost": "http://integration-hub:8085",
   "apiGatewayHost": "http://api-gateway",
 
   "allowOrigins": "[\"*\"]"

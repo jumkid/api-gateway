@@ -1,0 +1,16 @@
+{
+  "endpoint": "/v1/vehicle/vin/decode/{vin}",
+  "method": "GET",
+  "output_encoding": "no-op",
+  "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
+  "backend": [
+    {
+      "url_pattern": "/int/vehicle/vin/decode/{vin}",
+      "encoding": "json",
+      "sd": "static",
+      "method": "GET",
+      "host": ["{{ .integrationHubHost }}"]
+    }
+  ],
+  "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
+}

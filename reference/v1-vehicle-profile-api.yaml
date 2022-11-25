@@ -24,7 +24,7 @@ tags:
   - name: test
     description: API for test
 paths:
-  /v1/vehicles:
+  '/v1/vehicles':
     get:
       tags:
         - v1
@@ -58,8 +58,8 @@ paths:
     get:
       tags:
         - v1
-      operationId: getUserVehicle
-      description: get single private vehicle profile with corresponding user id or public vehicle profile
+      operationId: getVehicle
+      description: get single vehicle profile with corresponding vehicle id
       security:
         - Authorization: []
       parameters:
@@ -112,7 +112,8 @@ paths:
               schema:
                 items:
                   $ref: 'https://raw.githubusercontent.com/jumkid/share-jar/master/src/main/resources/share.yaml#/components/schemas/CustomErrorResponse'
-  /v1/vehicles/search:
+  
+  '/v1/vehicles/search':
     get:
       tags:
         - v1
@@ -143,7 +144,115 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/200-vehicles'
-  /v1/vehicles/import:
+
+  '/v1/vehicles/search-public':
+    get:
+      tags:
+        - v1
+        - test
+      operationId: searchPublicVehicle
+      description: search public vehicle profiles with keyword
+      security:
+        - Authorization: []
+      parameters:
+        - name: keyword
+          description: search keyword
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: size
+          description: search result size
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: page
+          description: page number of search result
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/200-vehicles'
+
+  '/v1/vehicle/search-matchers':
+    get:
+      tags:
+        - v1
+        - test
+      operationId: searchByMatchers
+      description: search by match fields
+      security:
+        - Authorization: []
+      parameters:
+        - name: size
+          description: search result size
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: page
+          description: page number of search result
+          in: query
+          required: true
+          schema:
+            type: integer
+      requestBody:      
+        description: match fields name and value list
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/VehicleFieldValuePair'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-vehicles'
+
+  '/v1/vehicle/search-aggregation':
+    post:
+      tags:
+        - v1
+        - test
+      operationId: searchForAggregation
+      description: aggregation search for certain field 
+      security:
+        - Authorization: []
+      parameters:
+        - name: field
+          description: field name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: size
+          description: size of bucket results
+          in: query
+          required: true
+          schema:
+            type: number    
+      requestBody:      
+        description: match fields name and value list
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/VehicleFieldValuePair'        
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  schema:
+                    type: string
+                    
+  '/v1/vehicles/import':
     post:
       tags:
         - v1
@@ -167,7 +276,7 @@ paths:
             application/json:
               schema:
                 type: integer
-  /v1/vehicles/reindex:
+  '/v1/vehicles/reindex':
     get:
       tags:
         - v1
@@ -288,6 +397,14 @@ components:
       enum:
         - public
         - private
+    VehicleFieldValuePair:
+      description: key value pair for vehicle field
+      properties:
+        field: 
+          type: string
+        value:
+          type: string
+
   responses:
     200-vehicle:
       description: OK

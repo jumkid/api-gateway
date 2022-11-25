@@ -3,5 +3,8 @@
     "sources": [ "./plugins/func_libs.lua" ],
     "pre": "local journeyId = uuid(); local c = ctx.load(); c:headers('Journey-ID', journeyId); local endpoint = '\"' .. c:method() .. ' ' .. c:url() .. '\"'; print('{', '\"JID\":', '\"' .. journeyId .. '\",', '\"ENDPOINT\":', endpoint, '}'); ",
     "allow_open_libs": true
+  },
+  "proxy": {
+    "sequential": true
   }
 }
