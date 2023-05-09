@@ -1,15 +1,15 @@
 {
-  "endpoint": "/v1/activities",
-  "method": "GET",
+  "endpoint": "/v1/activity/content/{id}",
+  "method": "DELETE",
   "output_encoding": "no-op",
   "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
-  "input_query_strings": ["entityId", "entityName"],
+  "input_query_strings": ["id"],
   "backend": [
     {
-      "url_pattern": "/activities",
-      "encoding": "json",
+      "url_pattern": "/activity/content/{id}",
+      "encoding": "no-op",
       "sd": "static",
-      "method": "GET",
+      "method": "DELETE",
       "host": ["{{ .activityServiceHost }}"]
     }
   ],

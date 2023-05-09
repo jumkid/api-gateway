@@ -67,7 +67,11 @@ paths:
           type: string
       responses:
         '200':
-          description: return list of user profile with the validate values    
+          description: return keycloak user tokens info
+          content:
+            application/json:
+              schema:
+                type: object
 
   '/v1/user/validate':
     get:
@@ -97,6 +101,25 @@ paths:
                     type: array
 
   '/v1/user/{userId}':
+    get:
+      tags: [v1]
+      operationId: get
+      description: fetch user profile
+      parameters:
+        - name: userId
+          description: user keycloak id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successfully fetch user profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userProfile'
+
     put:
       tags: [v1]
       operationId: update

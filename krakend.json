@@ -20,10 +20,14 @@
     {{ template "!!endpoint_user_update.tmpl" .hosts }},
 
     {{ template "endpoint_activities_get.tmpl" .hosts }},
+    {{ template "endpoint_activity_priorities_get.tmpl" .hosts }},
+    {{ template "endpoint_activity_statuses_get.tmpl" .hosts }},
     {{ template "endpoint_activity_delete.tmpl" .hosts }},
     {{ template "endpoint_activity_get_by_id.tmpl" .hosts }},
     {{ template "endpoint_activity_save.tmpl" .hosts }},
     {{ template "endpoint_activity_update.tmpl" .hosts }},
+    {{ template "endpoint_activity_content_resource_save.tmpl" .hosts }},
+    {{ template "endpoint_activity_content_resource_delete.tmpl" .hosts }},
 
     {{ template "endpoint_content_get_text.tmpl" .hosts }},
     {{ template "endpoint_content_get_metadata.tmpl" .hosts }},
@@ -52,6 +56,10 @@
     {{ template "endpoint_domaindata_import.tmpl" .hosts }},
     {{ template "endpoint_domaindata_delete.tmpl" .hosts }},
 
+    {{ template "endpoint_user_activities_get.tmpl" .hosts }},
+    {{ template "endpoint_user_activities_get_by_id.tmpl" .hosts }},
+    {{ template "endpoint_user_activities_update_unread.tmpl" .hosts }},
+
     {{ template "endpoint_vehicle_get_by_id.tmpl" .hosts }},
     {{ template "endpoint_vehicle_search.tmpl" .hosts }},
     {{ template "endpoint_vehicle_search_public.tmpl" .hosts }},
@@ -59,6 +67,7 @@
     {{ template "endpoint_vehicle_search_aggregation.tmpl" .hosts }},
     {{ template "endpoint_vehicle_get.tmpl" .hosts }},
     {{ template "endpoint_vehicle_save.tmpl" .hosts }},
+    {{ template "endpoint_vehicle_save_as_new.tmpl" .hosts }},
     {{ template "endpoint_vehicle_update.tmpl" .hosts }},
     {{ template "endpoint_vehicle_import.tmpl" .hosts }},
     {{ template "endpoint_vehicle_delete_by_id.tmpl" .hosts }},

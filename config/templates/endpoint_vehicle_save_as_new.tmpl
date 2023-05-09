@@ -1,16 +1,15 @@
 {
-  "endpoint": "/v1/activities",
-  "method": "GET",
+  "endpoint": "/v1/vehicles/save-as-new",
+  "method": "POST",
   "output_encoding": "no-op",
   "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
-  "input_query_strings": ["entityId", "entityName"],
   "backend": [
     {
-      "url_pattern": "/activities",
+      "url_pattern": "/vehicles/save-as-new",
       "encoding": "json",
       "sd": "static",
-      "method": "GET",
-      "host": ["{{ .activityServiceHost }}"]
+      "method": "POST",
+      "host": ["{{ .vehicleProfileHost }}"]
     }
   ],
   "extra_config": {{ template "endpoint_extra_config.tmpl" . }}

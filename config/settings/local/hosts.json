@@ -17,6 +17,7 @@
   "domainDataHost": "http://domain-data:8083",
   "vehicleProfileHost": "http://vehicle-profile:8084",
   "integrationHubHost": "http://integration-hub:8085",
+  "userCentralHost": "http://user-central:8086",
   "apiGatewayHost": "http://api-gateway",
 
   "allowOrigins": "[\"*\"]"

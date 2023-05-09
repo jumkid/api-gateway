@@ -1,16 +1,15 @@
 {
-  "endpoint": "/v1/activities",
-  "method": "GET",
+  "endpoint": "/v1/user/activities/{id}/unread",
+  "method": "PUT",
   "output_encoding": "no-op",
   "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
-  "input_query_strings": ["entityId", "entityName"],
   "backend": [
     {
-      "url_pattern": "/activities",
+      "url_pattern": "/user/activities/{id}/unread",
       "encoding": "json",
       "sd": "static",
-      "method": "GET",
-      "host": ["{{ .activityServiceHost }}"]
+      "method": "PUT",
+      "host": ["{{ .userCentralHost }}"]
     }
   ],
   "extra_config": {{ template "endpoint_extra_config.tmpl" . }}

@@ -1,12 +1,11 @@
 {
-  "endpoint": "/v1/activities",
+  "endpoint": "/v1/activity/priorities",
   "method": "GET",
   "output_encoding": "no-op",
   "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
-  "input_query_strings": ["entityId", "entityName"],
   "backend": [
     {
-      "url_pattern": "/activities",
+      "url_pattern": "/activity/priorities",
       "encoding": "json",
       "sd": "static",
       "method": "GET",

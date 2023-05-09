@@ -1,16 +1,15 @@
 {
-  "endpoint": "/v1/activities",
+  "endpoint": "/v1/user/activities/{id}",
   "method": "GET",
   "output_encoding": "no-op",
   "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
-  "input_query_strings": ["entityId", "entityName"],
   "backend": [
     {
-      "url_pattern": "/activities",
+      "url_pattern": "/user/activities/{id}",
       "encoding": "json",
       "sd": "static",
       "method": "GET",
-      "host": ["{{ .activityServiceHost }}"]
+      "host": ["{{ .userCentralHost }}"]
     }
   ],
   "extra_config": {{ template "endpoint_extra_config.tmpl" . }}
