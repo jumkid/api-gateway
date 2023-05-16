@@ -56,9 +56,9 @@
     {{ template "endpoint_domaindata_import.tmpl" .hosts }},
     {{ template "endpoint_domaindata_delete.tmpl" .hosts }},
 
-    {{ template "endpoint_user_activities_get.tmpl" .hosts }},
-    {{ template "endpoint_user_activities_get_by_id.tmpl" .hosts }},
-    {{ template "endpoint_user_activities_update_unread.tmpl" .hosts }},
+    {{ template "endpoint_user_activity_notification_get.tmpl" .hosts }},
+    {{ template "endpoint_user_activity_notification_get_by_id.tmpl" .hosts }},
+    {{ template "endpoint_user_activity_notification_update_unread.tmpl" .hosts }},
 
     {{ template "endpoint_vehicle_get_by_id.tmpl" .hosts }},
     {{ template "endpoint_vehicle_search.tmpl" .hosts }},

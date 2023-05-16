@@ -1,14 +1,14 @@
 {
-  "endpoint": "/v1/user/activities/{id}/unread",
-  "method": "PUT",
+  "endpoint": "/v1/user/activityNotifications",
+  "method": "GET",
   "output_encoding": "no-op",
   "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
   "backend": [
     {
-      "url_pattern": "/user/activities/{id}/unread",
+      "url_pattern": "/user/activityNotifications",
       "encoding": "json",
       "sd": "static",
-      "method": "PUT",
+      "method": "GET",
       "host": ["{{ .userCentralHost }}"]
     }
   ],
