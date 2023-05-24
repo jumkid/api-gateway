@@ -59,6 +59,7 @@
     {{ template "endpoint_user_activity_notification_get.tmpl" .hosts }},
     {{ template "endpoint_user_activity_notification_get_by_id.tmpl" .hosts }},
     {{ template "endpoint_user_activity_notification_update_unread.tmpl" .hosts }},
+    {{ template "endpoint_user_activity_notification_delete_by_id.tmpl" .hosts }},
 
     {{ template "endpoint_vehicle_get_by_id.tmpl" .hosts }},
     {{ template "endpoint_vehicle_search.tmpl" .hosts }},
