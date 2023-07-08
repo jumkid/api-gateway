@@ -43,6 +43,7 @@
     {{ template "endpoint_content_gallery_upload.tmpl" .hosts }},
     {{ template "endpoint_content_gallery_update_with_upload.tmpl" .hosts }},
     {{ template "endpoint_content_gallery_update.tmpl" .hosts }},
+    {{ template "endpoint_content_gallery_delete.tmpl" .hosts }},
     {{ template "endpoint_content_update_metadata.tmpl" .hosts }},
     {{ template "endpoint_content_delete_metadata.tmpl" .hosts }},
     {{ template "endpoint_content_get_trash.tmpl" .hosts }},

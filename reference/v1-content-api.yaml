@@ -222,6 +222,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/200-binary'
+
   '/v1/content/gallery':
     post:
       tags:
@@ -239,9 +240,11 @@ paths:
       responses:
         '202':
           $ref: '#/components/responses/200-metadata'
+
   '/v1/content/gallery/{id}':
     parameters:
         - $ref: '#/components/parameters/id'
+
     post:
       tags:
         - v1
@@ -262,6 +265,7 @@ paths:
         '202':
           description: ACCEPTED
           $ref: '#/components/responses/200-metadata'
+
     put:
       tags:
         - v1
@@ -279,6 +283,34 @@ paths:
         '202':
           description: ACCEPTED
           $ref: '#/components/responses/200-metadata'
+
+    delete:
+      tags:
+        - v1
+      operationId: delete
+      description: delete items from the gallary or the entire gallery
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: gallery identifier
+          schema:
+            type: string
+        - name: items
+          in: query
+          required: false
+          schema:
+            type: array
+            format: string    
+
+      responses:
+        '202':
+          description: successfully delete items from the gallery
+          content:
+            application/json:
+              schema:
+                type: array
+                format: '#/components/schemas/MediaFile'      
 
   '/v1/content/gallery/clone/{id}':
     post:
