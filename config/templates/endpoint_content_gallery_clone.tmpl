@@ -1,13 +1,13 @@
 {
-  "endpoint": "/v1/content/gallery/clone/{id}",
+  "endpoint": "/v1/content/gallery/{id}/clone",
   "method": "POST",
   "timeout": "30s",
   "output_encoding": "no-op",
   "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
-  "input_query_strings": ["title"],
+  "input_query_strings": ["title", "toMediaGalleryId"],
   "backend": [
     {
-      "url_pattern": "/gallery/clone/{id}",
+      "url_pattern": "/gallery/{id}/clone",
       "encoding": "json",
       "sd": "static",
       "method": "POST",

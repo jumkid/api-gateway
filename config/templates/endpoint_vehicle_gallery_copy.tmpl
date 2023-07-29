@@ -1,15 +1,15 @@
 {
-  "endpoint": "/v1/vehicles/search",
-  "method": "GET",
+  "endpoint": "/v1/vehicles/{id}/gallery-copy",
+  "method": "POST",
   "output_encoding": "no-op",
   "input_headers": ["Content-Type", "Authorization", "Journey-ID"],
-  "input_query_strings": ["keyword", "keywordMode", "size", "page"],
+  "input_query_strings": ["id", "sourceMediaGalleryId"],
   "backend": [
     {
-      "url_pattern": "/vehicles/search",
+      "url_pattern": "/vehicles/{id}/gallery-copy",
       "encoding": "json",
       "sd": "static",
-      "method": "GET",
+      "method": "POST",
       "host": ["{{ .vehicleProfileHost }}"]
     }
   ],

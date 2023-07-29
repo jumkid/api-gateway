@@ -312,7 +312,7 @@ paths:
                 type: array
                 format: '#/components/schemas/MediaFile'      
 
-  '/v1/content/gallery/clone/{id}':
+  '/v1/content/gallery/{id}/clone':
     post:
       tags:
         - v1
@@ -330,7 +330,13 @@ paths:
           required: false
           description: title of gallery
           schema:
-            type: string    
+            type: string
+        - name: toMediaGalleryId
+          in: query
+          required: false
+          description: target media gallery identifier
+          schema:
+            type: string      
       responses:
         '200':
           description: OK

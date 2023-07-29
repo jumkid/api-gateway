@@ -74,6 +74,7 @@
     {{ template "endpoint_vehicle_import.tmpl" .hosts }},
     {{ template "endpoint_vehicle_delete_by_id.tmpl" .hosts }},
     {{ template "endpoint_vehicle_reindex.tmpl" .hosts }},
+    {{ template "endpoint_vehicle_gallery_copy.tmpl" .hosts }},
 
     {{ template "endpoint_integration_vin_decode.tmpl" .hosts }}
   ]

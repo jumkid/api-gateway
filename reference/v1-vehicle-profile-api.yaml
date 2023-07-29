@@ -13,21 +13,18 @@ info:
   license:
     name: Jumkid Public License
     url: 'http://license.jumkid.com'
-
 servers:
   - description: Testing
     url: 'http://localhost'
   - description: Live production
     url: 'http://api.jumkid.com'
-
 tags:
   - name: v1
     description: API for version 1.X.X
   - name: test
     description: API for test
-
 paths:
-  '/v1/vehicles':
+  /v1/vehicles:
     get:
       tags:
         - v1
@@ -57,26 +54,6 @@ paths:
           $ref: '#/components/responses/201-created'
         '403':
           $ref: '#/components/responses/403-access-deny'
-  
-  '/v1/vehicles/save-as-new':
-    post:
-      tags:
-        - v1
-      operationId: saveAsNewVehicle
-      description: save as a new vehicle
-      security:
-        - Authorization: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Vehicle'
-      responses:
-        '201':
-          $ref: '#/components/responses/201-created'
-        '403':
-          $ref: '#/components/responses/403-access-deny'     
-
   '/v1/vehicles/{id}':
     get:
       tags:
@@ -135,8 +112,49 @@ paths:
               schema:
                 items:
                   $ref: 'https://raw.githubusercontent.com/jumkid/share-jar/master/src/main/resources/share.yaml#/components/schemas/CustomErrorResponse'
-  
-  '/v1/vehicles/search':
+  '/v1/vehicles/{id}/gallery-copy':
+    post:
+      tags:
+        - v1
+        - test
+      operationId: copyGallery
+      description: copy a give media gallery to target vehicle
+      security:
+        - Authorization: []
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - name: sourceMediaGalleryId
+          description: source media gallery id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /v1/vehicles/save-as-new:
+    post:
+      tags:
+        - v1
+      operationId: saveAsNewVehicle
+      description: save as a new vehicle
+      security:
+        - Authorization: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vehicle'
+      responses:
+        '201':
+          $ref: '#/components/responses/201-created'
+        '403':
+          $ref: '#/components/responses/403-access-deny'
+  /v1/vehicles/search:
     get:
       tags:
         - v1
@@ -152,6 +170,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/keywordMode'
         - name: size
           description: search result size
           in: query
@@ -167,8 +186,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/200-vehicles'
-
-  '/v1/vehicles/search-public':
+  /v1/vehicles/search-public:
     get:
       tags:
         - v1
@@ -184,6 +202,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/keywordMode'    
         - name: size
           description: search result size
           in: query
@@ -199,8 +218,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/200-vehicles'
-
-  '/v1/vehicle/search-matchers':
+  /v1/vehicles/search-matchers:
     get:
       tags:
         - v1
@@ -222,7 +240,7 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:      
+      requestBody:
         description: match fields name and value list
         content:
           application/json:
@@ -233,14 +251,13 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/200-vehicles'
-
-  '/v1/vehicle/search-aggregation':
+  /v1/vehicles/search-aggregation:
     post:
       tags:
         - v1
         - test
       operationId: searchForAggregation
-      description: aggregation search for certain field 
+      description: aggregation search for certain field
       security:
         - Authorization: []
       parameters:
@@ -255,15 +272,15 @@ paths:
           in: query
           required: true
           schema:
-            type: number    
-      requestBody:      
+            type: number
+      requestBody:
         description: match fields name and value list
         content:
           application/json:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/VehicleFieldValuePair'        
+                $ref: '#/components/schemas/VehicleFieldValuePair'
       responses:
         '200':
           description: successful
@@ -274,8 +291,7 @@ paths:
                 items:
                   schema:
                     type: string
-                    
-  '/v1/vehicles/import':
+  /v1/vehicles/import:
     post:
       tags:
         - v1
@@ -299,20 +315,19 @@ paths:
             application/json:
               schema:
                 type: integer
-  '/v1/vehicles/reindex':
+  /v1/vehicles/reindex:
     get:
       tags:
         - v1
       operationId: reindex
       description: reindex vehicle data
       security:
-        - Authorization: [ ]
+        - Authorization: []
       responses:
         '200':
           description: reindex vehicle data
         '403':
           $ref: '#/components/responses/403-access-deny'
-
 components:
   schemas:
     Vehicle:
@@ -420,14 +435,18 @@ components:
       enum:
         - public
         - private
+    KeywordMode:
+      type: string
+      enum:
+        - KEYWORD
+        - QUERYSTRING    
     VehicleFieldValuePair:
       description: key value pair for vehicle field
       properties:
-        field: 
+        field:
           type: string
         value:
           type: string
-
   responses:
     200-vehicle:
       description: OK
@@ -465,6 +484,13 @@ components:
       required: true
       schema:
         type: string
+    keywordMode:
+      name: id
+      description: search keyword mode
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/KeywordMode'    
   requestBodies:
     vehicle:
       content:
