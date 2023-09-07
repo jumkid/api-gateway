@@ -103,6 +103,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/200-binary'
+
   '/v1/content/metadata/{id}':
     parameters:
       - $ref: '#/components/parameters/id'
@@ -340,7 +341,7 @@ paths:
       responses:
         '200':
           description: OK
-          $ref: '#/components/responses/200-metadata'
+          $ref: '#/components/responses/200-metadata' 
 
   '/v1/content/trash':
     get:
