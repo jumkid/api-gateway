@@ -6,7 +6,7 @@
   "input_query_strings": ["username", "email"],
   "backend": [
     {
-      "url_pattern": "/auth/admin/realms/jumkid/users",
+      "url_pattern": "/admin/realms/jumkid/users",
       "encoding": "no-op",
       "sd": "static",
       "method": "GET",
@@ -20,7 +20,7 @@
         "auth/client-credentials": {
           "client_id": "{{ .keycloakAdminClientId }}",
           "client_secret": "{{ .keycloakAdminClientSecret }}",
-          "token_url": "{{ .keycloakHost }}/auth/realms/master/protocol/openid-connect/token",
+          "token_url": "{{ .keycloakHost }}/realms/master/protocol/openid-connect/token",
           "scopes": "roles",
           "endpoint_params": {
             "client_id": ["{{ .keycloakAdminClientId }}"],

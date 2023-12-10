@@ -3,26 +3,24 @@
   "method": "GET",
   "timeout": "3s",
   "output_encoding": "no-op",
-  "input_headers": ["Content-Type", "Authorization"],
   "backend": [
     {
-      "url_pattern": "/auth/admin/realms/{{ .keycloakRealm }}/users/{userId}",
-      "encoding": "json",
-      "sd": "static",
+      "url_pattern": "/admin/realms/{{ .keycloakRealm }}/users/{userId}",
       "method": "GET",
-      "host": [ "{{ .keycloakHost }}" ],
+      "host": ["{{ .keycloakHost }}"],
+      "input_headers": [""],
       "extra_config": {
         "auth/client-credentials": {
           "client_id": "{{ .keycloakAdminClientId }}",
           "client_secret": "{{ .keycloakAdminClientSecret }}",
-          "token_url": "{{ .keycloakHost }}/auth/realms/master/protocol/openid-connect/token",
-          "scopes": "roles",
+          "token_url": "{{ .keycloakHost }}/realms/master/protocol/openid-connect/token",
+          "scopes": "openid",
           "endpoint_params": {
-            "client_id": ["{{ .keycloakAdminClientId }}"],
-            "client_secret": ["{{ .keycloakAdminClientSecret }}"],
-            "username": ["{{ .keycloakAdminUserName }}"],
-            "password": ["{{ .keycloakAdminUserPassword }}"],
-            "grant_type": ["{{ .keycloakGrantType }}"]
+            "client_id": [ "{{ .keycloakAdminClientId }}" ],
+            "client_secret": [ "{{ .keycloakAdminClientSecret }}" ],
+            "username": [ "{{ .keycloakAdminUserName }}" ],
+            "password": [ "{{ .keycloakAdminUserPassword }}" ],
+            "grant_type": [ "{{ .keycloakGrantType }}" ]
           }
         }
       }

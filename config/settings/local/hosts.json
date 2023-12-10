@@ -1,24 +1,25 @@
 {
+  "pluginsPath": "./config/plugins",
+
   "elasticsearchHost": "http://elasticsearch:9200",
 
-  "keycloakHost": "http://keycloak:8080",
+  "keycloakHost": "http://localhost:8080",
   "keycloakClientId": "api-gateway",
-  "keycloakClientSecret": "txcUKHGpTUzcnQG78MENC6W47ZotmbX2",
-  "keycloakAdminUsersUrl": "http://keycloak:8080/auth/admin/realms/jumkid/users",
+  "keycloakClientSecret": "WJ0jT1M86MkxtZ7aZaucNhzVCbJNQ7CW",
   "keycloakAdminClientId": "admin-cli",
-  "keycloakAdminClientSecret": "o2Sp84o95UxGD0v2iSpdGD0tZDXKxUuN",
+  "keycloakAdminClientSecret": "",
   "keycloakAdminUserName": "admin",
   "keycloakAdminUserPassword": "admin",
   "keycloakGrantType": "password",
   "keycloakRealm": "jumkid",
 
-  "activityServiceHost": "http://activity-service:8081",
-  "contentVaultHost": "http://content-vault:8082",
-  "domainDataHost": "http://domain-data:8083",
-  "vehicleProfileHost": "http://vehicle-profile:8084",
-  "integrationHubHost": "http://integration-hub:8085",
-  "userCentralHost": "http://user-central:8086",
-  "apiGatewayHost": "http://api-gateway",
+  "activityServiceHost": "http://localhost:8081",
+  "contentVaultHost": "http://localhost:8082",
+  "domainDataHost": "http://localhost:8083",
+  "vehicleProfileHost": "http://localhost:8084",
+  "integrationHubHost": "http://localhost:8085",
+  "userCentralHost": "http://localhost:8086",
+  "apiGatewayHost": "http://localhost",
 
   "allowOrigins": "[\"*\"]"
 }

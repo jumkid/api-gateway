@@ -6,7 +6,7 @@
   "input_query_strings": ["username", "password"],
   "backend": [
     {
-      "url_pattern": "/auth/realms/{{ .keycloakRealm }}/protocol/openid-connect/token",
+      "url_pattern": "/realms/{{ .keycloakRealm }}/protocol/openid-connect/token",
       "encoding": "json",
       "sd": "static",
       "method": "POST",
@@ -24,7 +24,7 @@
           }
         },
         "modifier/lua-backend": {
-          "sources": [ "./plugins/func_libs.lua" ],
+          "sources": [ "{{ .pluginsPath }}/func_libs.lua" ],
           "pre": "local r = request.load(); local preBody = r:body(); r:body(preBody .. '&client_id={{.keycloakClientId}}&client_secret={{.keycloakClientSecret}}&grant_type={{.keycloakGrantType}}');",
           "live": false,
           "allow_open_libs": true

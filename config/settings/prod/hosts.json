@@ -1,7 +1,25 @@
 {
-  "contentVaultHost": "http://content-vault:8082",
+  "pluginsPath": "/etc/krakend/plugins",
 
+  "elasticsearchHost": "http://elasticsearch:9200",
+
+  "keycloakHost": "http://keycloak:8080",
+  "keycloakClientId": "api-gateway",
+  "keycloakClientSecret": "WJ0jT1M86MkxtZ7aZaucNhzVCbJNQ7CW",
+  "keycloakAdminClientId": "admin-cli",
+  "keycloakAdminClientSecret": "",
+  "keycloakAdminUserName": "admin",
+  "keycloakAdminUserPassword": "admin",
+  "keycloakGrantType": "password",
   "keycloakRealm": "jumkid",
 
-  "allowOrigins": ["http://www.jumkid.com"]
+  "activityServiceHost": "http://activity-service:8081",
+  "contentVaultHost": "http://content-vault:8082",
+  "domainDataHost": "http://domain-data:8083",
+  "vehicleProfileHost": "http://vehicle-profile:8084",
+  "integrationHubHost": "http://integration-hub:8085",
+  "userCentralHost": "http://user-central:8086",
+  "apiGatewayHost": "http://api-gateway",
+
+  "allowOrigins": "[\"*\"]"
 }

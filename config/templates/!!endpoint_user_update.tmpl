@@ -6,7 +6,7 @@
   "input_headers": ["Content-Type", "Authorization"],
   "backend": [
     {
-      "url_pattern": "/auth/admin/realms/{{ .keycloakRealm }}/users/{userId}",
+      "url_pattern": "/admin/realms/{{ .keycloakRealm }}/users/{userId}",
       "encoding": "json",
       "sd": "static",
       "method": "PUT",
@@ -15,7 +15,7 @@
         "auth/client-credentials": {
           "client_id": "{{ .keycloakAdminClientId }}",
           "client_secret": "{{ .keycloakAdminClientSecret }}",
-          "token_url": "{{ .keycloakHost }}/auth/realms/master/protocol/openid-connect/token",
+          "token_url": "{{ .keycloakHost }}/realms/master/protocol/openid-connect/token",
           "scopes": "roles",
           "endpoint_params": {
             "client_id": ["{{ .keycloakAdminClientId }}"],

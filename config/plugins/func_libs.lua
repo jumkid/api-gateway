@@ -1,7 +1,9 @@
 random = math.random
+
 function avoidSameId()
     return math.randomseed(tonumber(tostring(os.time())))
 end
+
 function uuid()
     local template ='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
     avoidSameId()
