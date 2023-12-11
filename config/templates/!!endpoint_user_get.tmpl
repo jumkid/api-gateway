@@ -3,6 +3,7 @@
   "method": "GET",
   "timeout": "3s",
   "output_encoding": "no-op",
+  "input_headers": ["Authorization"],
   "backend": [
     {
       "url_pattern": "/admin/realms/{{ .keycloakRealm }}/users/{userId}",

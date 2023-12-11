@@ -4,6 +4,7 @@ ARG env=prod
 
 COPY krakend.tmpl .
 COPY config .
+COPY certs ./certs
 
 ## Save temporary file to /tmp to avoid permission errors
 RUN FC_ENABLE=1 \
@@ -20,7 +21,8 @@ RUN krakend check -c /tmp/krakend.json --lint
 FROM devopsfaith/krakend:latest
 COPY --from=builder --chown=krakend /tmp/krakend.json .
 COPY --from=builder --chown=krakend /etc/krakend/plugins /etc/krakend/plugins
+COPY --from=builder --chown=krakend /etc/krakend/certs /etc/krakend/certs
 # Uncomment with Enterprise image:
 # COPY LICENSE /etc/krakend/LICENSE
 
-EXPOSE 80
+EXPOSE 443

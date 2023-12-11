@@ -7,22 +7,21 @@
   "backend": [
     {
       "url_pattern": "/admin/realms/{{ .keycloakRealm }}/users/{userId}",
-      "encoding": "json",
-      "sd": "static",
       "method": "PUT",
       "host": [ "{{ .keycloakHost }}" ],
+      "input_headers": ["Content-Type"],
       "extra_config": {
         "auth/client-credentials": {
           "client_id": "{{ .keycloakAdminClientId }}",
           "client_secret": "{{ .keycloakAdminClientSecret }}",
           "token_url": "{{ .keycloakHost }}/realms/master/protocol/openid-connect/token",
-          "scopes": "roles",
+          "scopes": "openid",
           "endpoint_params": {
-            "client_id": ["{{ .keycloakAdminClientId }}"],
-            "client_secret": ["{{ .keycloakAdminClientSecret }}"],
-            "username": ["{{ .keycloakAdminUserName }}"],
-            "password": ["{{ .keycloakAdminUserPassword }}"],
-            "grant_type": ["{{ .keycloakGrantType }}"]
+            "client_id": [ "{{ .keycloakAdminClientId }}" ],
+            "client_secret": [ "{{ .keycloakAdminClientSecret }}" ],
+            "username": [ "{{ .keycloakAdminUserName }}" ],
+            "password": [ "{{ .keycloakAdminUserPassword }}" ],
+            "grant_type": [ "{{ .keycloakGrantType }}" ]
           }
         }
       }

@@ -1,4 +1,7 @@
 {
+  "serverPort": 80,
+  "tlsServerPort": 443,
+
   "pluginsPath": "/etc/krakend/plugins",
 
   "elasticsearchHost": "http://elasticsearch:9200",

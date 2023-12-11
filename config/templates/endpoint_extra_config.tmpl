@@ -4,6 +4,11 @@
     "pre": "local journeyId = uuid(); local c = ctx.load(); c:headers('Journey-ID', journeyId); local endpoint = '\"' .. c:method() .. ' ' .. c:url() .. '\"'; print('{', '\"JID\":', '\"' .. journeyId .. '\",', '\"ENDPOINT\":', endpoint, '}'); ",
     "allow_open_libs": true
   },
+  "auth/validator": {
+    "alg": "RS256",
+    "jwk_url": "{{ .keycloakHost }}/realms/{{ .keycloakRealm }}/protocol/openid-connect/certs",
+    "disable_jwk_security": true
+  },
   "proxy": {
     "sequential": true
   }

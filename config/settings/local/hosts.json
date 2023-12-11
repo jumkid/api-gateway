@@ -1,4 +1,7 @@
 {
+  "serverPort": 80,
+  "tlsServerPort": 443,
+
   "pluginsPath": "./config/plugins",
 
   "elasticsearchHost": "http://elasticsearch:9200",

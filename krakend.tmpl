@@ -5,10 +5,14 @@
   "cache_ttl": "300s",
   "output_encoding": "json",
   "name": "api",
-  "port": 80,
+  "port": {{ .hosts.tlsServerPort }},
+  "tls": {
+    "public_key": "./certs/certificate.pem",
+    "private_key": "./certs/key.pem"
+  },
   "plugin": {
     "pattern":".so",
-    "folder": "{{ .pluginsPath }}"
+    "folder": "{{ .hosts.pluginsPath }}"
   },
   "extra_config": {{ template "service_extra_config.tmpl" . }},
 
